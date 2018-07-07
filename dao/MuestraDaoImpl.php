@@ -13,7 +13,7 @@
  */
 class MuestraDaoImpl implements MuestraDao{
     //put your code here
-    public static function LeerrObjeto($dto) {
+    public static function LeerObjeto($dto) {
         
     }
 

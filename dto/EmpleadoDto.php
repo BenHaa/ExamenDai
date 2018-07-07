@@ -16,11 +16,29 @@ class EmpleadoDto {
     private $rut;
     private $nombre;
     private $contrasena;
-    private $categoria;
+    private $idTipoEmpleado;
+    private $estado;
     
     function __construct() {
         
     }
+    function getIdTipoEmpleado() {
+        return $this->idTipoEmpleado;
+    }
+
+    function setIdTipoEmpleado($idTipoEmpleado) {
+        $this->idTipoEmpleado = $idTipoEmpleado;
+    }
+
+    function getEstado() {
+        return $this->estado;
+    }
+
+    function setEstado($estado) {
+        $this->estado = $estado;
+    }
+
+    
     
     
     function getRut() {
@@ -35,9 +53,6 @@ class EmpleadoDto {
         return $this->contrasena;
     }
 
-    function getCategoria() {
-        return $this->categoria;
-    }
 
     function setRut($rut) {
         $this->rut = $rut;
@@ -50,11 +65,6 @@ class EmpleadoDto {
     function setContrasena($contrasena) {
         $this->contrasena = $contrasena;
     }
-
-    function setCategoria($categoria) {
-        $this->categoria = $categoria;
-    }
-
 
     
 

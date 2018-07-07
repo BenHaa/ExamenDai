@@ -18,5 +18,5 @@ interface BaseDao {
 
     public static function actualizarObjeto($dto);
 
-    public static function LeerrObjeto($dto);
+    public static function LeerObjeto($dto);
 }

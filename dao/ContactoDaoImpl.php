@@ -13,7 +13,7 @@
  */
 class ContactoDaoImpl implements ContactoDao {
     
-    public static function LeerrObjeto($dto) {
+    public static function LeerObjeto($dto) {
         
     }
 

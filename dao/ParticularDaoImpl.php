@@ -16,7 +16,7 @@ class ParticularDaoImpl  implements ParticularDao{
     
     
     
-    public static function LeerrObjeto($dto) {
+    public static function LeerObjeto($dto) {
         
     }
 
