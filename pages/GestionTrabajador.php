@@ -8,6 +8,10 @@ $lista = EmpleadoDaoImpl::listarEmpleados(1);
 $listaTipo = EmpleadoDaoImpl::listarTipoEmpleado();
 ?>
 
+
+
+
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -51,13 +55,16 @@ $listaTipo = EmpleadoDaoImpl::listarTipoEmpleado();
 
 
                 $('#btnHabilitar').click(function () {
-                    if (confirm("¿Realmente desea aprobar al pedido?")) {
+                    if (confirm("¿Desea habilitar el trabajador?")) {
                         $.ajax({
-                            data: {"rutHabilitar": $('#txtRut2'), "habilitar": $('#btnHabilitar').val()},
+                            data: {"rutHabilitar": $('#txtRut2').val(), "habilitar": $('#btnHabilitar').val()},
                             method: 'POST',
-                            url: '../EstadoTrabajador',
-                            success: function () {
-                                alert("Se ha habilitado el trabajador");
+                            url: '../server/EstadoTrabajador.php',
+                            success: function (response) {
+                                //    alert("Se ha habilitado el trabajador");
+                                $('#formEstado').submit();
+                                // alert(employeeStatus);
+                                alert(response);
                             }
                         });
                     }
@@ -65,13 +72,17 @@ $listaTipo = EmpleadoDaoImpl::listarTipoEmpleado();
                 });
 
                 $('#btnInhabilitar').click(function () {
-                    if (confirm("¿Realmente desea aprobar al pedido?")) {
+                    if (confirm("¿Desea inhabilitar el trabajador?")) {
+                        console.log($('#txtRut2').val());
+                        console.log($('#btnInhabilitar').val());
                         $.ajax({
-                            data: {"rutHabilitar": $('#txtRut2'), "inhabilitar": $('#btnInhabilitar').val()},
+                            data: {"rutHabilitar": $('#txtRut2').val(), "inhabilitar": $('#btnInhabilitar').val()},
                             method: 'POST',
-                            url: '../EstadoTrabajador',
-                            success: function () {
-                                alert("Se ha inhabilitado el trabajador");
+                            url: '../server/EstadoTrabajador.php',
+                            success: function (response) {
+
+                                $('#formEstado').submit();
+                                alert(response);
                             }
                         });
                     }
@@ -290,21 +301,22 @@ $listaTipo = EmpleadoDaoImpl::listarTipoEmpleado();
 
                     </div>
                     <div class="modal-body">
-                        <table class="table-bordered table-hover table-striped" style="width:100%;">
+                        <form id="formEstado">
+                            <table class="table-bordered table-hover table-striped" style="width:100%;">
 
-                            <tbody>
-                                <tr>
-                                    <td style="text-align: center;">Rut Empleado</td>
-                                    <td style="width: 50%;"> <input type="text" name="txtRut2" id="txtRut2" maxlength="12" value="19.360.198-7"  class="form-control"/></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <br>
-                        <br>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: center;">Rut Empleado</td>
+                                        <td style="width: 50%;"> <input type="text" name="txtRut2" id="txtRut2" maxlength="12" value="19.360.198-7"  class="form-control"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br>
+                            <br>
 
-                        <button type="button" class="btn btn-primary" style="margin-left: 100px;" id="btnHabilitar" value="habilitar">Habilitar Trabajador</button>
-                        <button type="button" class="btn btn-primary" style="margin-left: 100px;" id="btnInhabilitar" value="inhabilitar">Inhabilitar Trabajador</button>
-
+                            <button type="button" class="btn btn-primary" style="margin-left: 100px;" id="btnHabilitar" value="habilitar">Habilitar Trabajador</button>
+                            <button type="button" class="btn btn-primary" style="margin-left: 100px;" id="btnInhabilitar" value="inhabilitar">Inhabilitar Trabajador</button>
+                        </form>
 
 
 

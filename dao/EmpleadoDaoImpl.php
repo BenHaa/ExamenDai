@@ -15,6 +15,7 @@ include_once '../dao/EmpleadoDao.php';
 include_once '../dto/EmpleadoDto.php';
 include_once '../sql/ClasePDO.php';
 header('Content-Type: text/html; charset=utf-8');
+
 class EmpleadoDaoImpl implements EmpleadoDao {
 
     //put your code here
@@ -26,7 +27,7 @@ class EmpleadoDaoImpl implements EmpleadoDao {
 
         try {
             $pdo = new clasePDO();
-            $stmt = $pdo->prepare("UPDATE EMPLEADO SET estado =? WHERE rutEmpleado =?");
+            $stmt = $pdo->prepare("UPDATE EMPLEADO SET estado=? WHERE rutEmpleado =?");
 
             $estado = $dto->getEstado();
             $rut = $dto->getRut();
@@ -36,6 +37,7 @@ class EmpleadoDaoImpl implements EmpleadoDao {
             $stmt->bindParam(2, $rut);
 
             $stmt->execute();
+            $pdo = null;
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
         }
@@ -62,7 +64,7 @@ class EmpleadoDaoImpl implements EmpleadoDao {
 
 
             $stmt->execute();
-            
+            $pdo = null;
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
         }
@@ -142,7 +144,7 @@ class EmpleadoDaoImpl implements EmpleadoDao {
     }
 
     public static function DescTipoAId($desc) {
-        $id=0;
+        $id = 0;
         try {
             $pdo = new clasePDO();
             $stmt = $pdo->prepare("SELECT IDTIPO FROM TIPO_EMPLEADO WHERE DESCRIPCION=?;");
