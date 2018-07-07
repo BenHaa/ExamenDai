@@ -5,6 +5,7 @@ include_once '../dao/EmpleadoDaoImpl.php';
 
 
 $lista = EmpleadoDaoImpl::listarEmpleados(1);
+$listaTipo = EmpleadoDaoImpl::listarTipoEmpleado();
 ?>
 
 <!doctype html>
@@ -42,6 +43,46 @@ $lista = EmpleadoDaoImpl::listarEmpleados(1);
         <script src="../assets/js/light-bootstrap-dashboard.js"></script>
         <script src="../css/js/jquery.rut.js"></script>
         <script src="../css/js/jquery-ui.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $('#txtRut').rut({formatOn: 'keyup'});
+                $('#txtRut2').rut({formatOn: 'keyup'});
+
+
+                $('#btnHabilitar').click(function () {
+                    if (confirm("¿Realmente desea aprobar al pedido?")) {
+                        $.ajax({
+                            data: {"rutHabilitar": $('#txtRut2'), "habilitar": $('#btnHabilitar').val()},
+                            method: 'POST',
+                            url: '../EstadoTrabajador',
+                            success: function () {
+                                alert("Se ha habilitado el trabajador");
+                            }
+                        });
+                    }
+
+                });
+
+                $('#btnInhabilitar').click(function () {
+                    if (confirm("¿Realmente desea aprobar al pedido?")) {
+                        $.ajax({
+                            data: {"rutHabilitar": $('#txtRut2'), "inhabilitar": $('#btnInhabilitar').val()},
+                            method: 'POST',
+                            url: '../EstadoTrabajador',
+                            success: function () {
+                                alert("Se ha inhabilitado el trabajador");
+                            }
+                        });
+                    }
+
+                });
+
+
+
+
+            });
+        </script>
 
 
 
@@ -155,14 +196,12 @@ $lista = EmpleadoDaoImpl::listarEmpleados(1);
                                 <?php foreach ($lista as $value) { ?>
 
                                     <tr style="height: 30px;">
-                                        <td style="text-align: center;"><?php echo $value->getRut()?> </td>
-                                        <td style="text-align: center;"><?php echo $value->getNombre()?></td>
-                                        <td style="text-align: center;"><?php echo EmpleadoDaoImpl::IdTipoADescripcion($value->getidTipoEmpleado())?></td>
+                                        <td style="text-align: center;"><?php echo $value->getRut() ?> </td>
+                                        <td style="text-align: center;"><?php echo $value->getNombre() ?></td>
+                                        <td style="text-align: center;"><?php echo EmpleadoDaoImpl::IdTipoADescripcion($value->getidTipoEmpleado()) ?></td>
                                         <td style="text-align: center;"><?php echo ($value->getEstado()) ? "Hábil" : "Inhábil" ?></td>
                                     </tr>
                                 <?php } ?>
-
-
                             </tbody>
                         </table>
 
@@ -192,20 +231,53 @@ $lista = EmpleadoDaoImpl::listarEmpleados(1);
         <div class="modal fade" id="modalAgregarTrabajador" tabindex="-1" role="dialog" aria-labelledby="modalAgregarTrabajador" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header" style="text-align: center;">
                         <h5 class="modal-title" id="modalAgregarTrabajador">Agregar Trabajador</h5>
 
                     </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+                    <form method="POST" action="../server/RegistrarEmpleado.php">
+                        <div class="modal-body">
+
+                            <table class="table-bordered table-hover table-striped" style="width:100%;">
+
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: center;">Rut Empleado</td>
+                                        <td style="width: 50%;"> <input type="text" name="txtRut" id="txtRut" maxlength="12" value="19.360.198-7"  class="form-control"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center;">Nombre Empleado</td>
+                                        <td><input type="text" name="txtNombre" value="jojo"  class="form-control" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center;">Contraseña</td>
+                                        <td><input type="text" name="txtContrasena" value="hola123"  class="form-control" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center;">Tipo de Empleado</td>
+                                        <td><select name="cmbTipo" class="form-control">
+                                                <?php foreach ($listaTipo as $value) { ?>
+                                                    <option><?php echo $value ?></option>
+                                                <?php } ?>
+                                            </select>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Ingresar Empleado</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+
+
 
 
 
@@ -213,12 +285,29 @@ $lista = EmpleadoDaoImpl::listarEmpleados(1);
         <div class="modal fade" id="modalEstado" tabindex="-1" role="dialog" aria-labelledby="modalEstadoLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header" style="text-align: center;">
                         <h5 class="modal-title" id="modalEstadoLabel">Cambiar Estado</h5>
 
                     </div>
                     <div class="modal-body">
-                        ...
+                        <table class="table-bordered table-hover table-striped" style="width:100%;">
+
+                            <tbody>
+                                <tr>
+                                    <td style="text-align: center;">Rut Empleado</td>
+                                    <td style="width: 50%;"> <input type="text" name="txtRut2" id="txtRut2" maxlength="12" value="19.360.198-7"  class="form-control"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <br>
+
+                        <button type="button" class="btn btn-primary" style="margin-left: 100px;" id="btnHabilitar" value="habilitar">Habilitar Trabajador</button>
+                        <button type="button" class="btn btn-primary" style="margin-left: 100px;" id="btnInhabilitar" value="inhabilitar">Inhabilitar Trabajador</button>
+
+
+
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -227,6 +316,7 @@ $lista = EmpleadoDaoImpl::listarEmpleados(1);
                 </div>
             </div>
         </div>
+
 
 
     </body>

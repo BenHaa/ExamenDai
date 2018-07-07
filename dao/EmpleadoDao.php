@@ -20,5 +20,9 @@ interface EmpleadoDao extends BaseDao {
     
     public static function IdTipoADescripcion($id);
     
+    public static function listarTipoEmpleado();
+    
+    //Cambia la descripción de tipo al id respectivo
+    public static function DescTipoAId($desc);
     
 }

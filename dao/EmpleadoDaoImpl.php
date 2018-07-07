@@ -14,7 +14,7 @@
 include_once '../dao/EmpleadoDao.php';
 include_once '../dto/EmpleadoDto.php';
 include_once '../sql/ClasePDO.php';
-
+header('Content-Type: text/html; charset=utf-8');
 class EmpleadoDaoImpl implements EmpleadoDao {
 
     //put your code here
@@ -62,6 +62,7 @@ class EmpleadoDaoImpl implements EmpleadoDao {
 
 
             $stmt->execute();
+            
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
         }
@@ -99,7 +100,7 @@ class EmpleadoDaoImpl implements EmpleadoDao {
 
     public static function IdTipoADescripcion($id) {
 
-        $descripcion="";
+        $descripcion = "";
         try {
             $pdo = new clasePDO();
             $stmt = $pdo->prepare("SELECT descripcion FROM TIPO_EMPLEADO WHERE IDTIPO=?;");
@@ -107,7 +108,7 @@ class EmpleadoDaoImpl implements EmpleadoDao {
             $stmt->execute();
             $resultado = $stmt->fetchAll();
             foreach ($resultado as $value) {
-                
+
                 $descripcion = utf8_encode($value["descripcion"]);
             }
 
@@ -116,6 +117,48 @@ class EmpleadoDaoImpl implements EmpleadoDao {
             echo $exc->getTraceAsString();
         }
         return $descripcion;
+    }
+
+    public static function listarTipoEmpleado() {
+        $lista = new ArrayObject();
+
+        try {
+            $pdo = new clasePDO();
+            $stmt = $pdo->prepare("SELECT DESCRIPCION FROM TIPO_EMPLEADO WHERE DESCRIPCION !='Administrador'");
+            $stmt->execute();
+            $resultado = $stmt->fetchAll();
+            foreach ($resultado as $value) {
+
+                $descripcion = utf8_encode($value["DESCRIPCION"]);
+
+                $lista->append($descripcion);
+            }
+
+            $pdo = null;
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $lista;
+    }
+
+    public static function DescTipoAId($desc) {
+        $id=0;
+        try {
+            $pdo = new clasePDO();
+            $stmt = $pdo->prepare("SELECT IDTIPO FROM TIPO_EMPLEADO WHERE DESCRIPCION=?;");
+            $stmt->bindParam(1, $desc);
+            $stmt->execute();
+            $resultado = $stmt->fetchAll();
+            foreach ($resultado as $value) {
+
+                $id = utf8_decode($value["IDTIPO"]);
+            }
+
+            $pdo = null;
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $id;
     }
 
 }

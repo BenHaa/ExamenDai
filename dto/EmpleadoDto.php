@@ -37,8 +37,6 @@ class EmpleadoDto {
     function setEstado($estado) {
         $this->estado = $estado;
     }
-
-    
     
     
     function getRut() {
