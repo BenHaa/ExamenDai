@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 //echo "Perfil ".$_SESSION["perfil"];
@@ -66,12 +65,12 @@ session_start();
                 <div class="sidebar-wrapper">
                     <div class="logo">
                         <a class="simple-text" href="HomeCliente.php">
-                                CLIENTE
+                            CLIENTE
                         </a>
                     </div>
 
                     <ul class="nav">
-                        <li class="">
+                        <li class="active">
                             <a href="DatosCliente.php">
                                 <i class="pe-7s-note2"></i>
                                 <p>Datos Personales Cliente</p>
@@ -89,7 +88,7 @@ session_start();
                                 <p>Estado de Muestra</p>
                             </a>
                         </li>
-              
+
 
 
                     </ul>
@@ -102,11 +101,10 @@ session_start();
                     <div class="container-fluid">
                         <div class="navbar-header">
 
-                            <a class="navbar-brand" href="#">Home Cliente</a>
+                            <a class="navbar-brand" href="#">Datos Cliente</a>
                         </div>
                         <div class="collapse navbar-collapse">
                             <ul class="nav navbar-nav navbar-left">
-
                             </ul>
 
                             <ul class="nav navbar-nav navbar-right">
@@ -116,18 +114,67 @@ session_start();
                                         <p>Log out</p>
                                     </a>
                                 </li>
-                                
+
                                 <li class="separator hidden-lg"></li>
                             </ul>
                         </div>
                     </div>
                 </nav>
 
+                <div class="content col-xs-offset-1" style="margin-left: 130px;">
+                    <div class="container-fluid">
+
+                        <table border="1"class="table-bordered table-hover table-striped" style="width: 50%; margin-left: 150px;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 22%; text-align: center; height: 40px;" colspan="2">Modificar Datos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+
+
+
+
+                                <tr style="height: 50px;">
+                                    <td style="text-align: center;" >Rut &nbsp; <input class="form-control" style="width: 30%; display: inline-block; margin: 0px -47px; margin-left: 72px;"/>  </td>
+                                </tr>
+
+                                <tr style="height: 50px;">
+                                    <td style="text-align: center">Nombre Contacto &nbsp; <input class="form-control" style="width: 30%; display: inline-block; margin: 0px -2px; margin-left: 31px;"/>  </td>
+                                </tr>
+
+                                <tr style="height: 50px;">
+                                    <td style="text-align: center">Contraseña &nbsp; <input class="form-control" style="width: 30%; display: inline-block;"/>  </td>
+                                </tr>
+
+                                <tr style="height: 50px;">
+                                    <td style="text-align: center">Teléfono &nbsp; <input class="form-control" style="width: 30%; display: inline-block;"/>  </td>
+                                </tr>
+
+                                <tr style="height: 50px;">
+                                    <td style="text-align: center">E-mail &nbsp; <input class="form-control" style="width: 30%; display: inline-block;"/>  </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                        <br>
+                        <br>
+
+                        <button type="submit" class="btn btn-primary col-xs-offset-3">Agregar Teléfono</button>
+                        <button type="submit" class="btn btn-primary">Actualizar Datos</button>
+
+
+
+                    </div>
+                </div>
 
 
                 <footer class="footer">
                     <div class="container-fluid">
-                       
+
                     </div>
                 </footer>
 

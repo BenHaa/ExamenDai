@@ -10,6 +10,14 @@
  *
  * @author Ignacio
  */
+include_once 'BaseDao.php';
 interface MuestraDao extends BaseDao {
-    //put your code here
+
+    public static function listarMuestrasPorCodigoMuestra($codigo);
+    
+    public static function listarMuestrasPorCodigoCliente($codigo);
+    
+    public static function listarMuestrasPorRutCliente($rut);
+    
+    
 }

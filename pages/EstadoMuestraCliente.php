@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 //echo "Perfil ".$_SESSION["perfil"];
@@ -66,7 +65,7 @@ session_start();
                 <div class="sidebar-wrapper">
                     <div class="logo">
                         <a class="simple-text" href="HomeCliente.php">
-                                CLIENTE
+                            CLIENTE
                         </a>
                     </div>
 
@@ -83,13 +82,13 @@ session_start();
                                 <p>Enviar Muestra</p>
                             </a>
                         </li>
-                        <li class="">
+                        <li class="active">
                             <a href="EstadoMuestraCliente.php">
                                 <i class="pe-7s-news-paper"></i>
                                 <p>Estado de Muestra</p>
                             </a>
                         </li>
-              
+
 
 
                     </ul>
@@ -102,7 +101,7 @@ session_start();
                     <div class="container-fluid">
                         <div class="navbar-header">
 
-                            <a class="navbar-brand" href="#">Home Cliente</a>
+                            <a class="navbar-brand" href="#">Estado de las muestras del Cliente</a>
                         </div>
                         <div class="collapse navbar-collapse">
                             <ul class="nav navbar-nav navbar-left">
@@ -116,7 +115,7 @@ session_start();
                                         <p>Log out</p>
                                     </a>
                                 </li>
-                                
+
                                 <li class="separator hidden-lg"></li>
                             </ul>
                         </div>
@@ -124,10 +123,66 @@ session_start();
                 </nav>
 
 
+                <div class="content col-xs-offset-1" style="margin-left: 130px;">
+                    <div class="container-fluid">
+                        <form id="formSearch">
+                            <table border="1"class="table-bordered  table-striped" style="width: 98%; margin-left:   0px;">
+                                <thead >
+                                    <tr>
+                                        <th colspan="2" style="width: 22%; text-align: center; height: 30px;">Buscar Muestras</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="height: 60px;">
+
+                                        <td>&nbsp;&nbsp;Rut o Código de Cliente &nbsp;&nbsp;&nbsp;&nbsp; 
+                                            <input type="text" class="form-control" style="width: 30%; display: inline-block"/>
+                                            &nbsp; 
+                                            <input type="submit" class="btn btn-primary" value="Buscar" name="btnBuscarPorRut" style="display: inline-block" /></td>
+                                        <td>
+                                            &nbsp;&nbsp; Código de Muestra&nbsp;&nbsp; 
+                                            <input type="number" class="form-control" style="width: 30%; display: inline-block"/>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                                            <input type="submit" class="btn btn-primary" value="Buscar" name="btnBuscarPorCodigo" style="display: inline-block" /></td>
+
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </form>
+                        
+                        
+                        
+                        <table border="1">
+                            <thead>
+                                <tr>
+                                    <th>Código de Muestra</th>
+                                    <th>Temperatura Muestra</th>
+                                    <th>Cantidad Muestra</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                
+                            </tbody>
+                        </table>
+                        
+                        
+                        
+                        
+                        
+
+                    </div>
+                </div>
 
                 <footer class="footer">
                     <div class="container-fluid">
-                       
+
                     </div>
                 </footer>
 

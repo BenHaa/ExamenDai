@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 //echo "Perfil ".$_SESSION["perfil"];
@@ -66,7 +65,7 @@ session_start();
                 <div class="sidebar-wrapper">
                     <div class="logo">
                         <a class="simple-text" href="HomeCliente.php">
-                                CLIENTE
+                            CLIENTE
                         </a>
                     </div>
 
@@ -77,7 +76,7 @@ session_start();
                                 <p>Datos Personales Cliente</p>
                             </a>
                         </li>
-                        <li class="">
+                        <li class="active">
                             <a href="EnvioMuestraCliente.php">
                                 <i class="pe-7s-news-paper"></i>
                                 <p>Enviar Muestra</p>
@@ -89,7 +88,7 @@ session_start();
                                 <p>Estado de Muestra</p>
                             </a>
                         </li>
-              
+
 
 
                     </ul>
@@ -102,11 +101,10 @@ session_start();
                     <div class="container-fluid">
                         <div class="navbar-header">
 
-                            <a class="navbar-brand" href="#">Home Cliente</a>
+                            <a class="navbar-brand" href="#">Enviar Muestra</a>
                         </div>
                         <div class="collapse navbar-collapse">
                             <ul class="nav navbar-nav navbar-left">
-
                             </ul>
 
                             <ul class="nav navbar-nav navbar-right">
@@ -116,18 +114,49 @@ session_start();
                                         <p>Log out</p>
                                     </a>
                                 </li>
-                                
+
                                 <li class="separator hidden-lg"></li>
                             </ul>
                         </div>
                     </div>
                 </nav>
 
+                <div class="content col-xs-offset-1" style="margin-left: 130px;">
+                    <div class="container-fluid">
+                        <form action="../server/EnvioMuestra.php" method="POST">
+                            <table border="1"class="table-bordered table-hover table-striped" style="width: 50%; margin-left: 120px;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 22%; text-align: center; height: 40px;" colspan="2">Enviar Muestra</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+
+
+                                    <tr style="height: 50px;">
+                                        <td style="text-align: center;">Temperatura &nbsp; <input  name="txtTemperatura" type="text" class="form-control" style="width: 30%; display: inline-block; margin: 0px -47px; margin-left: 72px;"/>  </td>
+                                    </tr>
+
+                                    <tr style="height: 50px;">
+                                        <td style="text-align: center">Cantidad &nbsp; <input name="txtCantidad" type="number" min="1" class="form-control" style="width: 30%; display: inline-block;   margin: 0px -57px; margin-left: 88px;"/>  </td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                            <br>
+                            <br>
+                            <button type="submit" class="btn btn-primary col-xs-offset-4">Enviar Muestra</button>
+                        </form>
+
+                    </div>
+                </div>
 
 
                 <footer class="footer">
                     <div class="container-fluid">
-                       
+
                     </div>
                 </footer>
 

@@ -12,5 +12,36 @@
  * @author Ignacio
  */
 class EmpresaDto {
-    //put your code here
+
+    private $rut;
+    private $nombre;
+    private $direccion;
+    
+    function getRut() {
+        return $this->rut;
+    }
+
+    function getNombre() {
+        return $this->nombre;
+    }
+
+    function getDireccion() {
+        return $this->direccion;
+    }
+
+    function setRut($rut) {
+        $this->rut = $rut;
+    }
+
+    function setNombre($nombre) {
+        $this->nombre = $nombre;
+    }
+
+    function setDireccion($direccion) {
+        $this->direccion = $direccion;
+    }
+
+
+    
+    
 }
