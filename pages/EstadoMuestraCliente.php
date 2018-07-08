@@ -132,9 +132,9 @@ session_start();
                                         <th colspan="2" style="width: 22%; text-align: center; height: 30px;">Buscar Muestras</th>
                                     </tr>
                                 </thead>
+                                
                                 <tbody>
                                     <tr style="height: 60px;">
-
                                         <td>&nbsp;&nbsp;Rut o Código de Cliente &nbsp;&nbsp;&nbsp;&nbsp; 
                                             <input type="text" class="form-control" style="width: 30%; display: inline-block"/>
                                             &nbsp; 
@@ -144,11 +144,10 @@ session_start();
                                             <input type="number" class="form-control" style="width: 30%; display: inline-block"/>
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                                             <input type="submit" class="btn btn-primary" value="Buscar" name="btnBuscarPorCodigo" style="display: inline-block" /></td>
-
                                         </td>
                                     </tr>
-
                                 </tbody>
+                                
                             </table>
                         </form>
                         

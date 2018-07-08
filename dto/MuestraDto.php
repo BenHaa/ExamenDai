@@ -12,15 +12,24 @@
  * @author Ignacio
  */
 class MuestraDto {
+
     private $idMuestra;
     private $fechaRecepcion;
     private $temperaturaMuestra;
     private $cantidadMuestra;
     private $codigoCliente;
-    
-    
+    private $listaAnalisis;
+
     function getIdMuestra() {
         return $this->idMuestra;
+    }
+
+    function getListaAnalisis() {
+        return $this->listaAnalisis;
+    }
+
+    function setListaAnalisis($listaAnalisis) {
+        $this->listaAnalisis = $listaAnalisis;
     }
 
     function getFechaRecepcion() {
@@ -59,8 +68,4 @@ class MuestraDto {
         $this->codigoCliente = $codigoCliente;
     }
 
-
-    
-    
-    
 }
