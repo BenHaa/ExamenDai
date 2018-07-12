@@ -2,7 +2,9 @@
 
 include_once '../dto/EmpresaDto.php';
 include_once '../dto/ContactoDto.php';
+include_once '../dto/ParticularDto.php';
 include_once '../dao/EmpresaDaoImp.php';
+include_once '../dao/ParticularDaoImpl.php';
 include_once '../dao/ContactoDaoImpl.php';
 
 //$cto2 = new ContactoDto();
@@ -14,15 +16,23 @@ include_once '../dao/ContactoDaoImpl.php';
 //$cto2->setRutEmpresa("11111111-1");
 //
 
-$dto = new ContactoDto();
-$emp = new EmpresaDto;
+//$dto = new ContactoDto();
+//$emp = new EmpresaDto;
+//
+//$emp->setNombre("test1");
+//$emp->setPassword("test1");
+//$emp->setRut("11111111-1");
+//$emp->setDireccion("test1");
 
-$emp->setNombre("test1");
-$emp->setPassword("test1");
-$emp->setRut("11111111-1");
-$emp->setDireccion("test1");
+$dto = new ParticularDto();
 
-if(EmpresaDaoImp::actualizarObjeto($emp)){
+$dto->setRutParticular("1111111111");
+$dto->setNombre("111111111111");
+$dto->setContrasena("111111111111");
+$dto->setDireccion("111111111111");
+$dto->setEmail("111111111111");
+
+if(ParticularDaoImpl::agregarObjeto($dto)){
     echo"funciona";
 }else{
     echo "no funciona";

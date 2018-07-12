@@ -100,7 +100,7 @@ class EmpresaDaoImp implements BaseDao {
 
             $stmt->execute();
             $pdo = null;
-            return $stmt->rowCount() > 0;
+            return ($stmt->rowCount()>0);
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
             return false;

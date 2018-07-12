@@ -81,7 +81,7 @@ class ParticularDaoImpl implements ParticularDao {
     public static function agregarObjeto($dto) {
         try {
             $pdo = new clasePDO();
-            $stmt = $pdo->prepare("INSERT INTO PARTICULAR(rutParticular, passwordParticular, nombreParticular, direccion_particular, emailParticular) VALUES(?, ?, ?, ?, ?)");
+            $stmt = $pdo->prepare("INSERT INTO PARTICULAR(rutParticular, passwordParticular, nombreParticular, direccionParticular, emailParticular) VALUES(?, ?, ?, ?, ?)");
 
 
             $rut = $dto->getRutParticular();
@@ -97,11 +97,14 @@ class ParticularDaoImpl implements ParticularDao {
             $stmt->bindParam(5, $email);
 
 
-            $stmt->execute();
-            $pdo = null;
+             if ($stmt->execute()) {
+                $pdo = null;
+                return true;
+            }
         } catch (Exception $exc) {
-            echo $exc->getTraceAsString();
+            echo $exc->getMessage();
         }
+        return false;
     }
 
     public static function eliminarrObjeto($dto) {
@@ -219,6 +222,23 @@ class ParticularDaoImpl implements ParticularDao {
             echo $exc->getTraceAsString();
         }
         return $codigo;
+    }
+    
+    public static function existeParticular($rut) {
+        try {
+            $pdo = new clasePDO();
+            $stmt = $pdo->prepare("SELECT * FROM PARTICULAR WHERE RUTPARTICULAR=?");
+            $stmt->bindParam(1, $rut);
+            $stmt->execute();
+            $rs = $stmt->fetchAll();            
+            foreach ($rs as $value){
+                return true;
+            }
+        } catch (Exception $exc) {
+            echo $exc->getMessage();
+            return false;
+        }
+        return false;
     }
 
 }

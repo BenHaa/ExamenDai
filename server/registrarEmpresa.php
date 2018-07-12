@@ -5,6 +5,8 @@ include_once '../dao/EmpresaDaoImp.php';
 include_once '../dao/ContactoDaoImpl.php';
 include_once '../dto/ContactoDto.php';
 
+session_start();
+
 $emp = new EmpresaDto;
 $cto1 = new ContactoDto();
 $cto2 = new ContactoDto();
@@ -22,19 +24,23 @@ $cto1->setEmailContacto($_POST["txtE1"]);
 $cto1->setTelefonoContacto($_POST["txtT1"]);
 $cto1->setRutEmpresa($_POST["txtRut"]);
 
-$cto2->setNombreContacto($_POST["txtN1"]);
-$cto2->setRutContacto($_POST["txtR1"]);
-$cto2->setEmailContacto($_POST["txtE1"]);
-$cto2->setTelefonoContacto($_POST["txtT1"]);
+$cto2->setNombreContacto($_POST["txtN2"]);
+$cto2->setRutContacto($_POST["txtR2"]);
+$cto2->setEmailContacto($_POST["txtE2"]);
+$cto2->setTelefonoContacto($_POST["txtT2"]);
 $cto2->setRutEmpresa($_POST["txtRut"]);
         
 
-if(EmpresaDaoImp::agregarObjeto($emp)&& ContactoDaoImpl::agregarObjeto($cto1)&& ContactoDaoImpl::agregarObjeto($cto2)){
+if (!EmpresaDaoImp::existeEmpresa($rut)) {
+    if (EmpresaDaoImp::agregarObjeto($emp) && ContactoDaoImpl::agregarObjeto($cto1) && ContactoDaoImpl::agregarObjeto($cto2)) {
 
-
-echo"<script>alert('Empresa registrada')</script>;";
-header('Location: ../pages/LoginUser.php');
-}else {
-    echo"<script>alert('La empresa ya está registrada')</script>";
-    header('Location: ../pages/registrarEmpresa.php');
+        $_SESSION["updateMsg"] = "Empresa registrada con exito";
+        header('Location: ../pages/LoginUser.php');
+    } else {
+        $_SESSION["updateMsg"] = "No se ha podido registrar la empresa";
+        header('Location: ../pages/registrarEmpresa.php');
+    }
+}else{
+    $_SESSION["updateMsg"] = "NLa empresa ya se encuentra registrada";
+        header('Location: ../pages/registrarEmpresa.php');
 }
