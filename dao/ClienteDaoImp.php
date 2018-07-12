@@ -14,46 +14,24 @@ class ClienteDaoImp implements BaseDao {
     public static function agregarObjeto($dto) {
         try {
             $pdo = new clasePDO();
+            $stmt = $pdo->prepare("INSERT INTO CLIENTE  (rut_contactoEmpresa, rut_particular) VALUES(?,?)");
 
-            if ($dto instanceof EmpresaDto) {
-                $stmt = $pdo->prepare("");
-
-                $temperatura = $dto->getTemperaturaMuestra();
-                $cantidad = $dto->getCantidadMuestra();
-                $codigoCliente = $dto->getCodigoCliente();
+            $empresa = $dto->getRutEmpresa();
+            $particular = $dto->getRutParticular();
 
 
-
-                $stmt->bindParam(1, $temperatura);
-                $stmt->bindParam(2, $cantidad);
-                $stmt->bindParam(3, $codigoCliente);
+            $stmt->bindParam(1, $empresa);
+            $stmt->bindParam(2, $particular);
 
 
-                $stmt->execute();
-                $pdo = null;
+            if ($stmt->execute()) {
+                return true;
             }
-            if ($dto instanceof ParticularDto) {
-                $stmt = $pdo->prepare("INSERT INTO MUESTRA (fechaRecepcion, temperaturaMuestra, cantidadMuestra, codigo_cliente) VALUES(now(),?,?,?);");
-
-                $temperatura = $dto->getTemperaturaMuestra();
-                $cantidad = $dto->getCantidadMuestra();
-                $codigoCliente = $dto->getCodigoCliente();
-
-
-
-                $stmt->bindParam(1, $temperatura);
-                $stmt->bindParam(2, $cantidad);
-                $stmt->bindParam(3, $codigoCliente);
-
-
-                $stmt->execute();
-                $pdo = null;
-            }
+            $pdo = null;
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
-        } finally {
-            $pdo = null;
         }
+        return false;
     }
 
     public static function eliminarrObjeto($dto) {

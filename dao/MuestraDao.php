@@ -21,4 +21,6 @@ interface MuestraDao extends BaseDao {
     
     public static function recuperarUltimaMuestra();
     
+    public static function listarMuestrasParaAnalisis();
+    
 }

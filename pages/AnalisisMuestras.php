@@ -1,13 +1,8 @@
 <?php
-
 session_start();
+include_once '../dao/MuestraDaoImpl.php';
 
-//echo "Perfil ".$_SESSION["perfil"];
-//if($_SESSION["perfil"]=='2'){
-//    echo "<script>alert('bien')</script>";
-//}else{
-//    header('Location: ../pages/perfil1.php');
-//}
+$lista = MuestraDaoImpl::listarMuestrasParaAnalisis();
 ?>
 
 <!doctype html>
@@ -66,7 +61,7 @@ session_start();
                 <div class="sidebar-wrapper">
                     <div class="logo">
                         <a class="simple-text" href="HomeTecnico.php">
-                                TÉCNICO
+                            TÉCNICO
                         </a>
                     </div>
 
@@ -89,7 +84,7 @@ session_start();
                     <div class="container-fluid">
                         <div class="navbar-header">
 
-                            <a class="navbar-brand" href="#">Home Técnico</a>
+                            <a class="navbar-brand" href="#">Analizar Muestra</a>
                         </div>
                         <div class="collapse navbar-collapse">
                             <ul class="nav navbar-nav navbar-left">
@@ -103,18 +98,41 @@ session_start();
                                         <p>Log out</p>
                                     </a>
                                 </li>
-                                
+
                                 <li class="separator hidden-lg"></li>
                             </ul>
                         </div>
                     </div>
                 </nav>
 
+                <div class="content col-xs-offset-1" style="margin-left: 80px;">
+                    <div class="container-fluid">
+                        <table border="1" class="table-bordered  table-striped" style="width:80%; margin-top: 50px; margin-left: 70px;">
+                            <thead>
+                                <tr>
+                                    <th>Código Cliente</th>
+                                    <th>Código Muestra</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach($lista as $value){ ?>
+                                <tr>
+                                    <td><?php echo $value->getIdMuestra() ?></td>
+                                    <td><?php echo $value->getCodigoCliente() ?></td>
+                                    <td> Procesar</td>
+                                </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
 
+
+                    </div>
+                </div>
 
                 <footer class="footer">
                     <div class="container-fluid">
-                       
+
                     </div>
                 </footer>
 

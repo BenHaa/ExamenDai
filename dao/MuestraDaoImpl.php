@@ -130,7 +130,7 @@ class MuestraDaoImpl implements MuestraDao {
     }
 
     public static function recuperarUltimaMuestra() {
-        $id=0;
+        $id = 0;
         try {
             $pdo = new clasePDO();
             $stmt = $pdo->prepare("SELECT MAX(IDMUESTRA) FROM MUESTRA;");
@@ -138,7 +138,7 @@ class MuestraDaoImpl implements MuestraDao {
             $stmt->execute();
             $resultado = $stmt->fetchAll();
             foreach ($resultado as $value) {
-                
+
                 $id = ($value["MAX(IDMUESTRA)"]);
                 return $id;
             }
@@ -148,6 +148,29 @@ class MuestraDaoImpl implements MuestraDao {
             echo $exc->getTraceAsString();
         }
         return $id;
+    }
+
+    public static function listarMuestrasParaAnalisis() {
+        $lista = new ArrayObject();
+        try {
+            $pdo = new clasePDO();
+            $stmt = $pdo->prepare("SELECT * FROM MUESTRA JOIN ANALISIS_MUESTRA ON MUESTRA.IDMUESTRA=ANALISIS_MUESTRA.IDANALISIS WHERE
+            MUESTRA.IDMUESTRA=ANALISIS_MUESTRA.IDANALISIS");
+            $stmt->bindParam(1, $codigo);
+            $stmt->execute();
+            $resultado = $stmt->fetchAll();
+            foreach ($resultado as $value) {
+                $dto = new MuestraDto();
+                $dto->setCodigoCliente($value["codigo_cliente"]);
+                $dto->setIdMuestra($value["idMuestra"]);
+                $lista->append($dto);
+            }
+
+            $pdo = null;
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $lista;
     }
 
 }

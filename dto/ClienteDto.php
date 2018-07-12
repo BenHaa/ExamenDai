@@ -1,37 +1,37 @@
 <?php
 
 class ClienteDto {
-    private $id_cliente;
-    private $rutCliente;
-    private $tipoDeCliente;
-    
+
+    private $idCliente;
+    private $rutParticular;
+    private $rutEmpresa;
+
     function __construct() {
         
     }
-    function getId_cliente() {
-        return $this->id_cliente;
+
+    function getIdCliente() {
+        return $this->idCliente;
     }
 
-    function getRutCliente() {
-        return $this->rutCliente;
+    function getRutParticular() {
+        return $this->rutParticular;
     }
 
-    function getTipoDeCliente() {
-        return $this->tipoDeCliente;
+    function getRutEmpresa() {
+        return $this->rutEmpresa;
     }
 
-    function setId_cliente($id_cliente) {
-        $this->id_cliente = $id_cliente;
+    function setIdCliente($idCliente) {
+        $this->idCliente = $idCliente;
     }
 
-    function setRutCliente($rutCliente) {
-        $this->rutCliente = $rutCliente;
+    function setRutParticular($rutParticular) {
+        $this->rutParticular = $rutParticular;
     }
 
-    function setTipoDeCliente($tipoDeCliente) {
-        $this->tipoDeCliente = $tipoDeCliente;
+    function setRutEmpresa($rutEmpresa) {
+        $this->rutEmpresa = $rutEmpresa;
     }
 
-
-    
 }

@@ -2,6 +2,8 @@
 
 include_once '../dto/ParticularDto.php';
 include_once '../dao/ParticularDaoImpl.php';
+include_once '../dao/ClienteDaoImp.php';
+include_once '../dto/ClienteDto.php';
 session_start();
 
 $dto = new ParticularDto();
@@ -19,6 +21,11 @@ $num2 = ($_POST["txtTel2"]);
 
 if (!ParticularDaoImpl::existeParticular($dto->getRutParticular())) {
     if (ParticularDaoImpl::agregarObjeto($dto)) {
+        $cli = new ClienteDto();
+        $cli->setRutParticular($dto->getRutParticular());
+
+        ClienteDaoImp::agregarObjeto($cli);
+
         $_SESSION["updateMsg"] = "Particular registrado con éxito";
     }
     ParticularDaoImpl::agregarTelefono($num1, $dto->getRutParticular());
