@@ -87,7 +87,7 @@ class EmpresaDaoImp implements BaseDao {
     public static function agregarObjeto($dto) {
         try {
             $pdo = new clasePDO();
-            $stmt = $pdo->prepare("INSERT INTO EMPRESA (RUTEMPRESA, NOMBREEMPRESA, PASSWORD, DIRECCIONEMPRESA) VALUES (?,?,?,?)");
+            $stmt = $pdo->prepare("INSERT INTO EMPRESA (RUTEMPRESA, NOMBREEMPRESA, passwordEmpresa, DIRECCIONEMPRESA) VALUES (?,?,?,?)");
 
             $rut = $dto->getRut();
             $nombre = $dto->getNombre();
