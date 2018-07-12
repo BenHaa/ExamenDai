@@ -72,12 +72,7 @@ $listaMuestras = MuestraDaoImpl::listarMuestrasPorCodigoCliente(3);
                                     <p>Datos Personales</p>
                                 </a>
                         </li>
-                        <li class="">
-                            <a href="EnvioMuestraCliente.php">
-                                <i class="pe-7s-news-paper"></i>
-                                <p>Enviar Muestra</p>
-                            </a>
-                        </li>
+
                         <li class="active">
                             <a href="EstadoMuestraCliente.php">
                                 <i class="pe-7s-news-paper"></i>

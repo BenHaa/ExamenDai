@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 //echo "Perfil ".$_SESSION["perfil"];
@@ -8,7 +7,13 @@ session_start();
 //}else{
 //    header('Location: ../pages/perfil1.php');
 //}
+if (!empty($_SESSION["envioMsg"])) {
+    $msg = $_SESSION["envioMsg"];
+}
 ?>
+?>
+
+
 
 <!doctype html>
 <html lang="en">
@@ -66,7 +71,7 @@ session_start();
                 <div class="sidebar-wrapper">
                     <div class="logo">
                         <a class="simple-text" href="HomeReceptor.php">
-                                RECEPTOR
+                            RECEPTOR
                         </a>
                     </div>
 
@@ -103,21 +108,60 @@ session_start();
                                         <p>Log out</p>
                                     </a>
                                 </li>
-                                
+
                                 <li class="separator hidden-lg"></li>
                             </ul>
                         </div>
                     </div>
                 </nav>
 
-                
-                
+                <form action="../server/RecepcionarMuestra.php" method="POST">
+                    <div class="content col-xs-offset-1" style="margin-left: 130px;">
+                        <div class="container-fluid" style='margin-top: 40px; margin-left: 80px;'>
+                            <input placeholder="Código Cliente" class="form-control" name="txtCodigo" value="5" style="display: inline-block; width:300px;"/> &nbsp;&nbsp;&nbsp;
+                            <input placeholder="Rut Cliente" class="form-control" name="txtRut" value="12345" style="display:inline-block; width:300px;"/>
+                            <br>
+                            <input placeholder="Nombre Cliente" class="form-control" name="txtNombre" value="a" style="display:inline-block; width:300px; margin-top: 20px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <input placeholder="Fecha de Recepción" class="form-control" id="txtFecha" name="txtFecha" style="display:inline-block; width:300px;"/>
+                            <br>
+                            <input placeholder="Temperatura de Muestra" class="form-control"  value="10.3" name="txtTemperatura" style="display:inline-block; width:300px;  margin-top: 20px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input placeholder="Cantidad de Muestra" class="form-control" value="3" name="txtCantidadMuestra" style="display:inline-block;  width:300px;"/>
+                        </div>
+
+
+                        <div class="container-fluid" style='margin-top: 40px; margin-left: 80px;'>
+                            <p>Tipos de análisis a realizar</p>
+
+
+                            <input type="checkbox" name="chkMicotoxina" value="ON" /> Micotoxina
+                            <br>
+                            <br>
+                            <input type="checkbox" name="chkMetalesPesados" value="ON" /> Metales Pesados
+                            <br>
+                            <br>
+                            <input type="checkbox" name="chkPlaguicida" value="ON" /> Detección de plaguicida
+                            <br>
+                            <br>
+                            <input type="checkbox" name="chkMareaRoja" value="ON" /> Marea Roja
+                            <br>
+                            <br>
+                            <input type="checkbox" name="chkBacteriasNocivas" value="ON" /> Detección de bacterias nocivas
+                            <br>
+
+                        </div>
+
+
+                        <button class="btn btn-primary submit" style="margin-left: 330px; margin-top: 40px;">Recepcionar Muestra </button>
+
+                    </div>
+                </form>
 
 
 
                 <footer class="footer">
                     <div class="container-fluid">
-                       
+
                     </div>
                 </footer>
 
@@ -125,6 +169,16 @@ session_start();
         </div>
 
 
+
+        <script>
+            $(document).ready(function () {
+                var msg = "<?php echo $msg ?>";
+                alert(msg);
+
+<?php unset($_SESSION["envioMsg"]); ?>
+
+            });
+        </script>
 
     </body>
 

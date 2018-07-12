@@ -19,5 +19,6 @@ interface MuestraDao extends BaseDao {
     
     public static function listarMuestrasPorRutCliente($rut);
     
+    public static function recuperarUltimaMuestra();
     
 }

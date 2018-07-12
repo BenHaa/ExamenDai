@@ -28,7 +28,16 @@ class AnalisisDto {
     function getIdTipoAnalisis() {
         return $this->idTipoAnalisis;
     }
+    
+    function getRutEmpleado() {
+        return $this->rutEmpleado;
+    }
 
+    function setRutEmpleado($rutEmpleado) {
+        $this->rutEmpleado = $rutEmpleado;
+    }
+
+    
     function getIdMuestra() {
         return $this->idMuestra;
     }

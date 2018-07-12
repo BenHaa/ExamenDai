@@ -173,15 +173,7 @@ if (!empty($_SESSION["envioMsg"])) {
 
 
 
-        <script>
-            $(document).ready(function () {
-                var msg = "<?php echo $msg ?>";
-                alert(msg);
 
-<?php unset($_SESSION["envioMsg"]); ?>
-
-            });
-        </script>
 
 
 

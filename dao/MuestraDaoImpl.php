@@ -129,4 +129,25 @@ class MuestraDaoImpl implements MuestraDao {
         return $lista;
     }
 
+    public static function recuperarUltimaMuestra() {
+        $id=0;
+        try {
+            $pdo = new clasePDO();
+            $stmt = $pdo->prepare("SELECT MAX(IDMUESTRA) FROM MUESTRA;");
+            $stmt->bindParam(1, $codigo);
+            $stmt->execute();
+            $resultado = $stmt->fetchAll();
+            foreach ($resultado as $value) {
+                
+                $id = ($value["MAX(IDMUESTRA)"]);
+                return $id;
+            }
+
+            $pdo = null;
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $id;
+    }
+
 }
