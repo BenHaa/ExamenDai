@@ -110,7 +110,7 @@ if (isset($_SESSION["dtoEmpresa"])) {
 
                     <ul class="nav">
                         <li class="active">
-                            <a href="DatosCliente.php">
+                            <a href="DatosClienteEmpresa.php">
                                 <i class="pe-7s-note2"></i>
                                 <p>Datos Personales</p>
                             </a>
@@ -181,7 +181,7 @@ if (isset($_SESSION["dtoEmpresa"])) {
                                     </tr>
 
                                     <tr style="height: 50px;">
-                                        <td style="text-align: center">Teléfono &nbsp; <input class="form-control" name="txtTelefono"  value="<?php echo $telefono; ?>" style="width: 30%; display: inline-block; margin: 0px -18px; margin-left: 53px;" required/>  </td>
+                                        <td style="text-align: center">Teléfono &nbsp; <input class="form-control" name="txtTelefono"  value="<?php echo $telefono; ?>" style="width: 30%; display: inline-block; margin: 0px -26px; margin-left: 53px;" required/>  </td>
                                     </tr>
 
 

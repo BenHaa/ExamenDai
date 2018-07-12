@@ -63,10 +63,14 @@ $listaMuestras = MuestraDaoImpl::listarMuestrasPorCodigoCliente(3);
 
                     <ul class="nav">
                         <li class="">
-                            <a href="DatosCliente.php">
-                                <i class="pe-7s-note2"></i>
-                                <p>Datos Personales Cliente</p>
-                            </a>
+                            <?php if (isset($_SESSION["dtoParticular"])) { ?>
+                                <a href="DatosCliente.php">
+                                <?php } elseif (isset($_SESSION["dtoEmpresa"])) { ?>
+                                    <a href="DatosClienteEmpresa.php">        
+                                    <?php } ?>
+                                    <i class="pe-7s-note2"></i>
+                                    <p>Datos Personales</p>
+                                </a>
                         </li>
                         <li class="">
                             <a href="EnvioMuestraCliente.php">

@@ -6,8 +6,12 @@ include_once '../dao/EmpleadoDaoImpl.php';
 
 $lista = EmpleadoDaoImpl::listarEmpleados(1);
 $listaTipo = EmpleadoDaoImpl::listarTipoEmpleado();
-?>
 
+
+if (!empty($_SESSION["addMsg"])) {
+    $msg = $_SESSION["addMsg"];
+}
+?>
 
 
 
@@ -329,6 +333,15 @@ $listaTipo = EmpleadoDaoImpl::listarTipoEmpleado();
             </div>
         </div>
 
+        <script>
+            $(document).ready(function () {
+                var msg = "<?php echo $msg ?>";
+                alert(msg);
+
+<?php unset($_SESSION["addMsg"]); ?>
+
+            });
+        </script>
 
 
     </body>

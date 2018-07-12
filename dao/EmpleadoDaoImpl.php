@@ -63,11 +63,14 @@ class EmpleadoDaoImpl implements EmpleadoDao {
             $stmt->bindParam(5, $estado);
 
 
-            $stmt->execute();
-            $pdo = null;
+            if ($stmt->execute()) {
+                $pdo = null;
+                return true;
+            }
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
         }
+        return false;
     }
 
     public static function eliminarrObjeto($dto) {

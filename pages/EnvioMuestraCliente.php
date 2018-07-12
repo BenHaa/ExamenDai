@@ -74,10 +74,14 @@ if (!empty($_SESSION["envioMsg"])) {
 
                     <ul class="nav">
                         <li class="">
-                            <a href="DatosCliente.php">
-                                <i class="pe-7s-note2"></i>
-                                <p>Datos Personales Cliente</p>
-                            </a>
+                            <?php if (isset($_SESSION["dtoParticular"])) { ?>
+                                <a href="DatosCliente.php">
+                            <?php } elseif (isset($_SESSION["dtoEmpresa"])) { ?>
+                                    <a href="DatosClienteEmpresa.php">        
+                                <?php } ?>
+                                    <i class="pe-7s-note2"></i>
+                                    <p>Datos Personales</p>
+                                </a>
                         </li>
                         <li class="active">
                             <a href="EnvioMuestraCliente.php">
@@ -174,7 +178,7 @@ if (!empty($_SESSION["envioMsg"])) {
                 var msg = "<?php echo $msg ?>";
                 alert(msg);
 
-            <?php unset($_SESSION["envioMsg"]); ?>
+<?php unset($_SESSION["envioMsg"]); ?>
 
             });
         </script>

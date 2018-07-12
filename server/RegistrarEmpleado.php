@@ -3,6 +3,8 @@
 include_once '../dto/EmpleadoDto.php';
 include_once '../dao/EmpleadoDaoImpl.php';
 header('Content-Type: text/html; charset=utf-8');
+session_start();
+
 $dto = new EmpleadoDto();
 $dto->setNombre($_POST["txtNombre"]);
 $dto->setContrasena($_POST["txtContrasena"]);
@@ -12,11 +14,11 @@ $dto->setEstado(1);
 
 
 
-if(EmpleadoDaoImpl::agregarObjeto($dto)){
-    echo '<script> alert("Se ingresó el empleado");</script>';
-    
-}else{
-     echo '<script> alert("No se pudo ingresar el empleado");</script>';
+
+if (EmpleadoDaoImpl::agregarObjeto($dto)) {
+    $_SESSION["addMsg"] = "Se agregó correctamente el empleado";
+} else {
+    $_SESSION["addMsg"] = "No se pudo agregar el empleado";
 }
 
 header('Location: ../pages/GestionTrabajador.php');
