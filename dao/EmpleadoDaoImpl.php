@@ -46,7 +46,7 @@ class EmpleadoDaoImpl implements EmpleadoDao {
     public static function agregarObjeto($dto) {
         try {
             $pdo = new clasePDO();
-            $stmt = $pdo->prepare("INSERT INTO EMPLEADO(rutEmpleado, nombreEmpleado, passwordEmpleado, id_tipoEmpleado, estado) VALUES(?,?,?,?,?);");
+            $stmt = $pdo->prepare("INSERT INTO EMPLEADO(rutEmpleado, nombreEmpleado, passwordEmpleado, id_tipoEmpleado, estado) VALUES(?,?,?,?,?)");
 
 
             $rut = $dto->getRut();
@@ -105,7 +105,7 @@ class EmpleadoDaoImpl implements EmpleadoDao {
         $descripcion = "";
         try {
             $pdo = new clasePDO();
-            $stmt = $pdo->prepare("SELECT descripcion FROM TIPO_EMPLEADO WHERE IDTIPO=?;");
+            $stmt = $pdo->prepare("SELECT descripcion FROM TIPO_EMPLEADO WHERE IDTIPO=?");
             $stmt->bindParam(1, $id);
             $stmt->execute();
             $resultado = $stmt->fetchAll();

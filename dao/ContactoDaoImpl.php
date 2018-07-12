@@ -22,11 +22,51 @@ class ContactoDaoImpl implements ContactoDao {
     }
 
     public static function actualizarObjeto($dto) {
-        
+        try {
+            $pdo = new clasePDO();
+            $stmt = $pdo->prepare("UPDATE CONTACTO SET nombreContacto=?, emailContacto=?. telefonoContacto=?,
+            WHERE rutContacto=?");
+            
+            $nombre = $dto->getNombreContacto();
+            $email = $dto->getEmailContacto();
+            $telefono = $dto->getTelefonoContacto();
+            
+            $stmt->bindParam(1, $nombre);
+            $stmt->bindParam(2, $telefono);
+            $stmt->bindParam(3, $email);
+
+            $stmt->execute();
+            $pdo = null;
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
     }
 
     public static function agregarObjeto($dto) {
-        
+        try {
+            $pdo = new clasePDO();
+            $stmt = $pdo->prepare("INSERT INTO CONTACTO(rutContacto, nombreContacto, emailContacto, telefonoContacto, rut_empresa) 
+            VALUES(?,?,?,?,?)");
+
+
+            $rut = $dto->getRutContacto();
+            $nombre = $dto->getNombreContacto();
+            $email = $dto->getEmailContacto();
+            $telefono = $dto->getTelefonoContacto();
+            $rutEmp = $dto->getRutEmpresa();
+
+            $stmt->bindParam(1, $rut);
+            $stmt->bindParam(2, $nombre);
+            $stmt->bindParam(3, $email);
+            $stmt->bindParam(4, $telefono);
+            $stmt->bindParam(5, $rutEmp);
+
+
+            $stmt->execute();
+            $pdo = null;
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
     }
 
     public static function eliminarrObjeto($dto) {
@@ -88,6 +128,37 @@ class ContactoDaoImpl implements ContactoDao {
             echo $exc->getTraceAsString();
         }
         return $codigo;
+    }
+
+    public static function buscarPorRutEmpresa($rutEmpresa) {
+        $dto = new ContactoDto();
+
+        try {
+            $pdo = new clasePDO();
+            $stmt = $pdo->prepare("SELECT * FROM CONTACTO WHERE RUT_EMPRESA=?");
+
+
+            $stmt->bindParam(1, $rutEmpresa);
+
+            if ($stmt->execute()) {
+                $resultado = $stmt->fetchAll();
+
+                foreach ($resultado as $value) {
+
+                    $dto->setNombreContacto($value["nombreContacto"]);
+                    $dto->setEmailContacto($value["emailContacto"]);
+                    $dto->setRutContacto($value["rutContacto"]);
+                    $dto->setRutEmpresa($value["rut_empresa"]);
+                    $dto->setTelefonoContacto($value["telefonoContacto"]);
+
+                    $pdo = null;
+                    return $dto;
+                }
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $dto;
     }
 
 }

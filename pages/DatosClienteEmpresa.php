@@ -1,8 +1,8 @@
 <?php
-include_once '../dao/ParticularDaoImpl.php';
 include_once '../dao/ContactoDaoImpl.php';
-include_once '../dto/ParticularDto.php';
 include_once '../dto/ContactoDto.php';
+include_once '../dto/EmpresaDto.php';
+include_once '../dao/EmpresaDaoImp.php';
 
 session_start();
 
@@ -19,19 +19,25 @@ if (!empty($_SESSION["updateMsg"])) {
     $msg = $_SESSION["updateMsg"];
 }
 
+if (isset($_SESSION["dtoContacto"])) {
+    $contacto = $_SESSION["dtoContacto"];
+    $rut = $contacto->getRutContacto();
+    $nombre = $contacto->getNombreContacto();
+    $correo = $contacto->getEmailContacto();
+    $telefono = $contacto->getTelefonoContacto();
+    
+    $_SESSION["rutContacto"] = $rut;
+}
 
+if (isset($_SESSION["dtoEmpresa"])) {
+    $empresa = $_SESSION["dtoEmpresa"];
+    $rutEmpresa = $empresa->getRut();
+    $direccionEmpresa = $empresa->getDireccion();
+    $nombreEmpresa = $empresa->getNombre();
+    $contrasena = $empresa->getPassword();
 
-if (isset($_SESSION["dtoParticular"])) {
-    $particular = $_SESSION["dtoParticular"];
-    $rut = $particular->getRutParticular();
-    $direccion = $particular->getDireccion();
-    $nombre = $particular->getNombre();
-    $contrasena = $particular->getContrasena();
-    $correo = $particular->getEmail();
-
-
-    $codigo = ParticularDaoImpl::buscarCodigoCliente($rut);
-    $telefonos = ParticularDaoImpl::listarTelefonosParticular($rut);
+    $codigo = EmpresaDaoImp::buscarCodigoCliente($rutEmpresa);
+    $_SESSION["codigoEmpresa"] = $codigo;
 }
 ?>
 
@@ -155,11 +161,13 @@ if (isset($_SESSION["dtoParticular"])) {
 
                 <div class="content col-xs-offset-1" style="margin-left: 130px;">
                     <div class="container-fluid">
-                        <form action="../server/ActualizarDatosCliente.php" method="POST">
-                            <table border="1"class="table-bordered table-hover table-striped" style="width: 50%; margin-left: 150px;">
+
+                        <form action="../server/ActualizarDatosEmpresaYContacto.php" method="POST">
+
+                            <table class="table-bordered table-hover table-striped" style="width: 50%; margin-left: -100px; ">
                                 <thead>
                                     <tr>
-                                        <th style="width: 22%; text-align: center; height: 40px;" colspan="2">Modificar Datos</th>
+                                        <th style="width: 22%; text-align: center; height: 40px;" colspan="2">Modificar Contacto</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -168,24 +176,16 @@ if (isset($_SESSION["dtoParticular"])) {
                                     </tr>
 
                                     <tr style="height: 50px;">
-                                        <td style="text-align: center;" >Código Cliente&nbsp; <input class="form-control" style="width: 30%; display: inline-block;     margin: -7px -6px; margin-left: 47px;" value="<?php echo $codigo;?>" disabled />  </td>
+                                        <td style="text-align: center">Nombre  &nbsp; <input class="form-control"  name="txtNombre"  value="<?php echo $nombre; ?>" style="width: 30%; display: inline-block; margin: 0px -26px; margin-left: 60px;" required/>  </td>
                                     </tr>
 
                                     <tr style="height: 50px;">
-                                        <td style="text-align: center">Nombre  &nbsp; <input class="form-control"  name="txtNombre"  value="<?php echo $nombre;?>" style="width: 30%; display: inline-block; margin: 0px -26px; margin-left: 60px;" required/>  </td>
-                                    </tr>
-
-                                    <tr style="height: 50px;">
-                                        <td style="text-align: center">Contraseña &nbsp; <input class="form-control"  name="txtContrasena" value="<?php echo $contrasena;?>" style="width: 30%; display: inline-block; margin: 0px -18px; margin-left: 46px;" required/>  </td>
-                                    </tr>
-
-                                    <tr style="height: 50px;">
-                                        <td style="text-align: center">Dirección &nbsp; <input class="form-control" name="txtDireccion"  value="" style="width: 30%; display: inline-block; margin: 0px -18px; margin-left: 53px;" required/>  </td>
+                                        <td style="text-align: center">Teléfono &nbsp; <input class="form-control" name="txtTelefono"  value="<?php echo $telefono; ?>" style="width: 30%; display: inline-block; margin: 0px -18px; margin-left: 53px;" required/>  </td>
                                     </tr>
 
 
                                     <tr style="height: 50px;">
-                                        <td style="text-align: center">E-mail &nbsp; <input class="form-control" name="txtEmail" value="<?php echo $correo;?>"  style="width: 30%; display: inline-block; margin: 0px -31px; margin-left: 62px;" required />  </td>
+                                        <td style="text-align: center">E-mail &nbsp; <input class="form-control" name="txtEmail" value="<?php echo $correo; ?>"  style="width: 30%; display: inline-block; margin: 0px -31px; margin-left: 62px;" required />  </td>
                                     </tr>
 
                                 </tbody>
@@ -193,10 +193,48 @@ if (isset($_SESSION["dtoParticular"])) {
                             <br>
                             <br>
 
-                            <button type="button" class="btn btn-primary col-xs-offset-3" data-toggle="modal" data-target="#modalTelefonos">Gestionar Teléfonos</button>
-                            <button type="submit" class="btn btn-primary">Actualizar Datos</button>
+                            <button type="submit" name="updContacto" value="updContacto" class="btn btn-primary">Actualizar Datos Contacto</button>
+
 
                         </form>
+
+                        <form action="../server/ActualizarDatosEmpresaYContacto.php" method="POST">
+                            <table class="table-bordered table-hover table-striped" style="width: 50%; margin-left: 337px; margin-top: -316px;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 22%; text-align: center; height: 40px;" colspan="2">Modificar  Empresa</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="height: 50px;">
+                                        <td style="text-align: center;">Rut &nbsp; <input class="form-control" style="width: 30%; display: inline-block; margin: 0px -40px; margin-left: 78px;"  value="<?php echo $rutEmpresa ?>" disabled />  </td>
+                                    </tr>
+
+                                    <tr style="height: 50px;">
+                                        <td style="text-align: center;">Código Cliente&nbsp; <input class="form-control" style="width: 30%; display: inline-block;  margin: -7px -6px; margin-left: 47px;" value="<?php echo $codigo; ?>" disabled />  </td>
+                                    </tr>
+
+                                    <tr style="height: 50px;">
+                                        <td style="text-align: center">Nombre  &nbsp; <input class="form-control"  name="txtNombre"  value="<?php echo $nombreEmpresa; ?>" style="width: 30%; display: inline-block; margin: 0px -26px; margin-left: 60px;" required/>  </td>
+                                    </tr>
+
+                                    <tr style="height: 50px;">
+                                        <td style="text-align: center">Contraseña &nbsp; <input class="form-control"  name="txtContrasena" value="<?php echo $contrasena; ?>" style="width: 30%; display: inline-block; margin: 0px -18px; margin-left: 46px;" required/>  </td>
+                                    </tr>
+
+                                    <tr style="height: 50px;">
+                                        <td style="text-align: center">Dirección &nbsp; <input class="form-control" name="txtDireccion"  value="<?php echo $direccionEmpresa; ?>" style="width: 30%; display: inline-block; margin: 0px -18px; margin-left: 53px;" required/>  </td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+
+                            <button type="submit" class="btn btn-primary" style="margin-top: 42px; margin-left: 475px;">Actualizar Datos Empresa</button>
+
+                        </form>
+
+
 
 
                     </div>
@@ -241,11 +279,11 @@ if (isset($_SESSION["dtoParticular"])) {
                     <form action="../server/GestionarTelefonosParticular.php" method="POST">
                         <div class="modal-body">
                             <p style="margin-left: 100px; display: inline-block;"> Teléfono  </p> &nbsp; <select name="cmbTelefono" class="form-control" style="width:180px; display: inline-block"/> 
-                            <?php
-                            foreach ($telefonos as $value) {
-                                echo "<option>" . $value . "</option>";
-                            }
-                            ?>
+<?php
+foreach ($telefonos as $value) {
+    echo "<option>" . $value . "</option>";
+}
+?>
                             </select> &nbsp;&nbsp;
                             <button class="btn btn-primary"  name="eliminar" value="eliminar" style="display: inline-block; margin-left: 4px;">Eliminar Número </button>
 

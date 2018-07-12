@@ -4,6 +4,8 @@ include_once '../dto/EmpleadoDto.php';
 include_once '../dao/EmpleadoDaoImpl.php';
 include_once '../dto/ContactoDto.php';
 include_once '../dao/ContactoDaoImpl.php';
+include_once '../dao/EmpresaDaoImp.php';
+include_once '../dto/EmpresaDto.php';
 include_once '../dto/ParticularDto.php';
 include_once '../dao/ParticularDaoImpl.php';
 
@@ -11,26 +13,29 @@ session_start();
 
 if (isset($_POST["txtUserName"]) & isset($_POST["txtPassword"])) {
 
-    $contacto = ContactoDaoImpl::comprobarContacto($_POST["txtUserName"], $_POST["txtPassword"]);
+    $empresa = EmpresaDaoImp::recuperarEmpresa($_POST["txtUserName"], $_POST["txtPassword"]);
+    echo var_dump($empresa);
+    if (!empty($empresa->getRut())) {
 
-    if (!empty($contacto->getRutContacto())) {
+        $contacto = ContactoDaoImpl::buscarPorRutEmpresa($empresa->getRut());
+
+        $_SESSION["dtoEmpresa"] = $empresa;
         $_SESSION["dtoContacto"] = $contacto;
-        header('Location: ../pages/HomeCliente.php');
-        
+        header('Location: ../pages/DatosClienteEmpresa.php');
     }
 
     $particular = ParticularDaoImpl::comprobarParticular($_POST["txtUserName"], $_POST["txtPassword"]);
 
     if (!empty($particular->getRutParticular())) {
         $_SESSION["dtoParticular"] = $particular;
-        header('Location: ../pages/HomeCliente.php');
+        header('Location: ../pages/DatosCliente.php');
     }
 
     $empleado = EmpleadoDaoImpl::comprobarEmpleado($_POST["txtUserName"], $_POST["txtPassword"]);
 
     if (!empty($empleado->getRut())) {
-         $_SESSION["dtoEmpleado"] = $empleado;
-         
+        $_SESSION["dtoEmpleado"] = $empleado;
+
         if ($empleado->getIdTipoEmpleado() == 1) {
             header('Location: ../pages/HomeAdmin.php');
         }

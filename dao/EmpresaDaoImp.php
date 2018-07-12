@@ -1,38 +1,44 @@
 <?php
+
 include_once 'BaseDao.php';
 include_once '../sql/ClasePDO.php';
+include_once '../dto/EmpresaDto.php';
 
 class EmpresaDaoImp implements BaseDao {
 
     //put your code here
     public static function LeerObjeto($dto) {
-        try {
-            $pdo = new clasePDO();
-            $stmt = $pdo->prepare("SELECT * FROM EMPRESA WHERE RUTEMPRESA=?");
-
-            $rut = $dto->getRut();
-
-            $stmt->bindParam(1, $rut);
-
-            $stmt->execute();
-            $rs = $stmt->fetchAll();
-            $dto = new EmpresaDto();
-            foreach ($rs as $value){
-                $dto->setRut($value["rutEmpresa"]);
-                $dto->setNombre($value["nombreEmpresa"]);
-                $dto->setPassword($value["password"]);
-                $dto->setDireccion($value["direccionEmpresa"]);
-                break;
-            }
-            return $dto;
-        } catch (Exception $exc) {
-//            echo $exc->getTraceAsString();
-            return null;
-        }
+        
     }
 
     public static function actualizarObjeto($dto) {
         
+    }
+
+    public static function recuperarEmpresa($nombre, $pass) {
+        $dto = new EmpresaDto();
+        try {
+            $pdo = new clasePDO();
+            $stmt = $pdo->prepare("SELECT * FROM EMPRESA WHERE NOMBREEMPRESA=? AND PASSWORDEMPRESA=?");
+
+
+            $stmt->bindParam(1, $nombre);
+            $stmt->bindParam(2, $pass);
+
+            $stmt->execute();
+            $rs = $stmt->fetchAll();
+
+            foreach ($rs as $value) {
+                $dto->setRut($value["rutEmpresa"]);
+                $dto->setNombre($value["nombreEmpresa"]);
+                $dto->setPassword($value["passwordEmpresa"]);
+                $dto->setDireccion($value["direccionEmpresa"]);
+                $pdo=null;
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $dto;
     }
 
     //Registrar empresa
@@ -52,25 +58,26 @@ class EmpresaDaoImp implements BaseDao {
             $stmt->bindParam(4, $direccion);
 
             $stmt->execute();
+            $pdo=null;
             return $stmt->rowCount() > 0;
         } catch (Exception $exc) {
 //            echo $exc->getTraceAsString();
             return false;
         }
-        
     }
-    public static function existeEmpresa($rut) {
+
+    public static function existeEmpresa($nombre, $pass) {
         try {
             $pdo = new clasePDO();
-            $stmt = $pdo->prepare("SELECT * FROM EMPRESA WHERE RUTEMPRESA=?");
+            $stmt = $pdo->prepare("SELECT * FROM EMPRESA WHERE NOMBREEMPRESA=? AND PASSWORDEMPRESA=?");
 
-            $rute = $rut;
-
-            $stmt->bindParam(1, $rute);
+            $stmt->bindParam(1, $nombre);
+            $stmt->bindParam(1, $pass);
 
             $stmt->execute();
-            $rs = $stmt->fetchAll();            
-            foreach ($rs as $value){
+            $rs = $stmt->fetchAll();
+            foreach ($rs as $value) {
+                $pdo=null;
                 return true;
             }
         } catch (Exception $exc) {
@@ -78,10 +85,32 @@ class EmpresaDaoImp implements BaseDao {
             return false;
         }
     }
-    
 
     public static function eliminarrObjeto($dto) {
         
+    }
+
+    public static function buscarCodigoCliente($rut) {
+        $codigo = 0;
+        try {
+            $pdo = new clasePDO();
+            $stmt = $pdo->prepare("SELECT IDCLIENTE FROM CLIENTE JOIN CONTACTO ON CLIENTE.RUT_CONTACTOEMPRESA=CONTACTO.RUT_EMPRESA
+            WHERE CONTACTO.RUT_EMPRESA=?");
+
+
+            $stmt->bindParam(1, $rut);
+
+
+            $stmt->execute();
+            $rs = $stmt->fetchAll();
+
+            foreach ($rs as $value) {
+                $codigo = $value["IDCLIENTE"];
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $codigo;
     }
 
 }
