@@ -12,18 +12,14 @@
  * @author Ignacio
  */
 class ParticularDto {
-    private $codigoParticular;
+
     private $rutParticular;
     private $contrasena;
     private $nombre;
     private $direccion;
     private $email;
-    private $telefono;
-    
-    function getCodigoParticular() {
-        return $this->codigoParticular;
-    }
 
+    
     function getRutParticular() {
         return $this->rutParticular;
     }
@@ -42,10 +38,6 @@ class ParticularDto {
 
     function getEmail() {
         return $this->email;
-    }
-
-    function setCodigoParticular($codigoParticular) {
-        $this->codigoParticular = $codigoParticular;
     }
 
     function setRutParticular($rutParticular) {
@@ -68,19 +60,4 @@ class ParticularDto {
         $this->email = $email;
     }
 
-    function getTelefono() {
-        return $this->telefono;
-    }
-
-    function setTelefono($telefono) {
-        $this->telefono = $telefono;
-    }
-
-
-
-    
-    
-    
-    
-    
 }

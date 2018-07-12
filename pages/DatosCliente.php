@@ -1,4 +1,5 @@
 <?php
+include_once '../dao/ParticularDaoImpl.php';
 session_start();
 
 //echo "Perfil ".$_SESSION["perfil"];
@@ -7,7 +8,14 @@ session_start();
 //}else{
 //    header('Location: ../pages/perfil1.php');
 //}
+
+$telefonos = ParticularDaoImpl::listarTelefonosParticular("14.273-871-3");
+
+if (!empty($_SESSION["updateMsg"])) {
+    $msg = $_SESSION["updateMsg"];
+}
 ?>
+
 
 <!doctype html>
 <html lang="en">
@@ -46,7 +54,12 @@ session_start();
         <script src="../css/js/jquery-ui.js"></script>
 
 
+        <style>
+            .modal-footer{
+                border-top: 0px;
+            }
 
+        </style>
 
 
     </head>
@@ -73,7 +86,7 @@ session_start();
                         <li class="active">
                             <a href="DatosCliente.php">
                                 <i class="pe-7s-note2"></i>
-                                <p>Datos Personales Cliente</p>
+                                <p>Datos Personales</p>
                             </a>
                         </li>
                         <li class="">
@@ -101,7 +114,7 @@ session_start();
                     <div class="container-fluid">
                         <div class="navbar-header">
 
-                            <a class="navbar-brand" href="#">Datos Cliente</a>
+                            <a class="navbar-brand" href="#">Datos Cliente Particular</a>
                         </div>
                         <div class="collapse navbar-collapse">
                             <ul class="nav navbar-nav navbar-left">
@@ -123,49 +136,48 @@ session_start();
 
                 <div class="content col-xs-offset-1" style="margin-left: 130px;">
                     <div class="container-fluid">
+                        <form action="../server/ActualizarDatosCliente.php" method="POST">
+                            <table border="1"class="table-bordered table-hover table-striped" style="width: 50%; margin-left: 150px;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 22%; text-align: center; height: 40px;" colspan="2">Modificar Datos</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="height: 50px;">
+                                        <td style="text-align: center;">Rut &nbsp; <input class="form-control" style="width: 30%; display: inline-block; margin: 0px -40px; margin-left: 78px;"  value="14.273-871-3" disabled />  </td>
+                                    </tr>
 
-                        <table border="1"class="table-bordered table-hover table-striped" style="width: 50%; margin-left: 150px;">
-                            <thead>
-                                <tr>
-                                    <th style="width: 22%; text-align: center; height: 40px;" colspan="2">Modificar Datos</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                                    <tr style="height: 50px;">
+                                        <td style="text-align: center;" >Código Cliente&nbsp; <input class="form-control" style="width: 30%; display: inline-block;     margin: -7px -6px; margin-left: 47px;" value="4" disabled />  </td>
+                                    </tr>
+
+                                    <tr style="height: 50px;">
+                                        <td style="text-align: center">Nombre  &nbsp; <input class="form-control"  name="txtNombreContacto" style="width: 30%; display: inline-block; margin: 0px -26px; margin-left: 60px;" required/>  </td>
+                                    </tr>
+
+                                    <tr style="height: 50px;">
+                                        <td style="text-align: center">Contraseña &nbsp; <input class="form-control"  name="txtContrasena" style="width: 30%; display: inline-block; margin: 0px -18px; margin-left: 46px;" required/>  </td>
+                                    </tr>
+
+                                    <tr style="height: 50px;">
+                                        <td style="text-align: center">Dirección &nbsp; <input class="form-control" name="txtDireccion"  style="width: 30%; display: inline-block; margin: 0px -18px; margin-left: 53px;" required/>  </td>
+                                    </tr>
 
 
+                                    <tr style="height: 50px;">
+                                        <td style="text-align: center">E-mail &nbsp; <input class="form-control" name="txtEmail"  style="width: 30%; display: inline-block; margin: 0px -31px; margin-left: 62px;" required />  </td>
+                                    </tr>
 
+                                </tbody>
+                            </table>
+                            <br>
+                            <br>
 
+                            <button type="button" class="btn btn-primary col-xs-offset-3" data-toggle="modal" data-target="#modalTelefonos">Gestionar Teléfonos</button>
+                            <button type="submit" class="btn btn-primary">Actualizar Datos</button>
 
-
-                                <tr style="height: 50px;">
-                                    <td style="text-align: center;" >Rut &nbsp; <input class="form-control" style="width: 30%; display: inline-block; margin: 0px -47px; margin-left: 72px;"/>  </td>
-                                </tr>
-
-                                <tr style="height: 50px;">
-                                    <td style="text-align: center">Nombre Contacto &nbsp; <input class="form-control" style="width: 30%; display: inline-block; margin: 0px -2px; margin-left: 31px;"/>  </td>
-                                </tr>
-
-                                <tr style="height: 50px;">
-                                    <td style="text-align: center">Contraseña &nbsp; <input class="form-control" style="width: 30%; display: inline-block;"/>  </td>
-                                </tr>
-
-                                <tr style="height: 50px;">
-                                    <td style="text-align: center">Teléfono &nbsp; <input class="form-control" style="width: 30%; display: inline-block;"/>  </td>
-                                </tr>
-
-                                <tr style="height: 50px;">
-                                    <td style="text-align: center">E-mail &nbsp; <input class="form-control" style="width: 30%; display: inline-block;"/>  </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-
-                        <br>
-                        <br>
-
-                        <button type="submit" class="btn btn-primary col-xs-offset-3">Agregar Teléfono</button>
-                        <button type="submit" class="btn btn-primary">Actualizar Datos</button>
-
+                        </form>
 
 
                     </div>
@@ -183,7 +195,56 @@ session_start();
 
 
 
+        <script>
+            $(document).ready(function () {
+                var msg = "<?php echo $msg ?>";
+                alert(msg);
 
+                <?php unset($_SESSION["updateMsg"]); ?>
+
+            });
+        </script>
+
+
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalTelefonos" tabindex="-1" role="dialog" aria-labelledby="modalTelefonos" aria-hidden="true">
+            <div class="modal-dialog" role="document"  style="margin-left: 420px; margin-top: 50px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <br>
+                        <h5 style="text-align: center; font-size: larger" class="modal-title" id="modalTelefonos">Teléfonos del Particular</h5>
+
+                    </div>
+                    <br>
+                    <form action="../server/GestionarTelefonosParticular.php" method="POST">
+                        <div class="modal-body">
+                            <p style="margin-left: 100px; display: inline-block;"> Teléfono  </p> &nbsp; <select name="cmbTelefono" class="form-control" style="width:180px; display: inline-block"/> 
+                            <?php
+                            foreach ($telefonos as $value) {
+                                echo "<option>" . $value . "</option>";
+                            }
+                            ?>
+                            </select> &nbsp;&nbsp;
+                            <button class="btn btn-primary"  name="eliminar" value="eliminar" style="display: inline-block; margin-left: 4px;">Eliminar Número </button>
+
+                            <br>
+                            <br>
+                            <p style="margin-left: 100px; display: inline-block;">Teléfono </p> &nbsp; <input type="text"  placeholder="Ej: +56912345678"name="txtTelefono" class="form-control" style="width:180px; display: inline-block"/>
+                            &nbsp; &nbsp;
+                            <button class="btn btn-primary" style="display: inline-block;" name="agregar" value="agregar">Agregar Número </button>
+                        </div>
+                    </form>
+                    <br>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 

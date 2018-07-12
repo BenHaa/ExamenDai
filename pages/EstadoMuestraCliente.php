@@ -1,12 +1,11 @@
 <?php
+include_once '../dao/MuestraDaoImpl.php';
+include_once '../dto/MuestraDto.php';
+include_once '../dao/AnalisisDaoImpl.php';
 session_start();
 
-//echo "Perfil ".$_SESSION["perfil"];
-//if($_SESSION["perfil"]=='2'){
-//    echo "<script>alert('bien')</script>";
-//}else{
-//    header('Location: ../pages/perfil1.php');
-//}
+
+$listaMuestras = MuestraDaoImpl::listarMuestrasPorCodigoCliente(3);
 ?>
 
 <!doctype html>
@@ -37,13 +36,6 @@ session_start();
         <link href="../assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-
-
-        <script src="../assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
-        <script src="../assets/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="../assets/js/light-bootstrap-dashboard.js"></script>
-        <script src="../css/js/jquery.rut.js"></script>
-        <script src="../css/js/jquery-ui.js"></script>
 
 
 
@@ -123,58 +115,75 @@ session_start();
                 </nav>
 
 
-                <div class="content col-xs-offset-1" style="margin-left: 130px;">
+                <div class="content col-xs-offset-1" style="margin-left: 80px;">
                     <div class="container-fluid">
-                        <form id="formSearch">
+                        <form id="formSearch" method="POST" action="../server/BuscarMuestras.php">
+                            <br>
+
                             <table border="1"class="table-bordered  table-striped" style="width: 98%; margin-left:   0px;">
                                 <thead >
                                     <tr>
                                         <th colspan="2" style="width: 22%; text-align: center; height: 30px;">Buscar Muestras</th>
                                     </tr>
                                 </thead>
-                                
+
                                 <tbody>
                                     <tr style="height: 60px;">
                                         <td>&nbsp;&nbsp;Rut o Código de Cliente &nbsp;&nbsp;&nbsp;&nbsp; 
-                                            <input type="text" class="form-control" style="width: 30%; display: inline-block"/>
+                                            <input name="txtCodigoCliente" type="text" class="form-control" style="width: 30%; display: inline-block"/>
+                                            <button type="submit" class="btn btn-primary" name="btnBuscarPorCodCliente" value="cod" style="display: inline-block"> Buscar </button>
+
                                             &nbsp; 
-                                            <input type="submit" class="btn btn-primary" value="Buscar" name="btnBuscarPorRut" style="display: inline-block" /></td>
                                         <td>
                                             &nbsp;&nbsp; Código de Muestra&nbsp;&nbsp; 
-                                            <input type="number" class="form-control" style="width: 30%; display: inline-block"/>
+                                            <input name="txtCodigoMuestra" type="number"  value="1" class="form-control" style="width: 30%; display: inline-block"/>
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                                            <input type="submit" class="btn btn-primary" value="Buscar" name="btnBuscarPorCodigo" style="display: inline-block" /></td>
+                                            <button type="submit" class="btn btn-primary" name="btnBuscarPorCodMuestra" value="code" style="display: inline-block"> Buscar </button>
+
                                         </td>
                                     </tr>
                                 </tbody>
-                                
+
                             </table>
                         </form>
-                        
-                        
-                        
-                        <table border="1">
-                            <thead>
-                                <tr>
-                                    <th>Código de Muestra</th>
-                                    <th>Temperatura Muestra</th>
-                                    <th>Cantidad Muestra</th>
-                                    <th>Estado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                
-                            </tbody>
-                        </table>
-                        
-                        
-                        
-                        
-                        
+
+                        <br>
+                        <br>
+                        <br>
+
+
+                        <?php
+                        if (!empty($_SESSION["lista"])) {
+                            $listaMuestras = $_SESSION["lista"];
+                            ?>
+                            <table border="1" class="table-bordered  table-striped" style="margin-left: 90px; width: 70%;">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center;">Código de Muestra</th>
+                                        <th style="text-align: center;">Temperatura Muestra</th>
+                                        <th style="text-align: center;">Cantidad Muestra</th>
+                                        <th style="text-align: center;">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    foreach ($listaMuestras as $value) {
+                                        ?>
+                                        <tr>
+                                            <td style="text-align: center;"> <?php echo $value->getIdMuestra(); ?></td>
+                                            <td style="text-align: center;"> <?php echo $value->getTemperaturaMuestra(); ?></td>
+                                            <td style="text-align: center;"> <?php echo $value->getCantidadMuestra(); ?></td>
+                                            <td style="text-align: center;"> <?php echo AnalisisDaoImpl::listarEstadoResultadoMuestra($value->getIdMuestra()) ? "Terminada" : "En proceso" ?> </td>
+                                        </tr>
+                                    <?php } ?>
+
+                                </tbody>
+                            </table>
+                        <?php } ?>
+
+
+
+
 
                     </div>
                 </div>
@@ -192,6 +201,11 @@ session_start();
 
 
 
+        <script src="../assets/js/jquery.3.2.1.min.js" type="text/javascript"></script>
+        <script src="../assets/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../assets/js/light-bootstrap-dashboard.js"></script>
+        <script src="../css/js/jquery.rut.js"></script>
+        <script src="../css/js/jquery-ui.js"></script>
 
 
     </body>

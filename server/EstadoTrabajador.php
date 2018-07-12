@@ -17,9 +17,6 @@ if (!empty($rut)) {
     $dto->setRut($rut);
 }
 
-
-
-
 if (isset($_POST["habilitar"])) {
     $dto->setEstado(1);
     EmpleadoDaoImpl::actualizarObjeto($dto);

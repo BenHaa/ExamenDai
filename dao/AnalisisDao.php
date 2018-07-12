@@ -10,6 +10,9 @@
  *
  * @author Ignacio
  */
-interface AnalisisDao extends BaseDao{
-    
+include_once 'BaseDao.php';
+
+interface AnalisisDao extends BaseDao {
+
+    public static function listarEstadoResultadoMuestra($idMuestra);
 }

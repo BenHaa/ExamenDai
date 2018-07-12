@@ -10,6 +10,7 @@
  *
  * @author Ignacio
  */
+include_once 'BaseDao.php';
 interface ContactoDao extends BaseDao{
     //put your code here
 }

@@ -12,6 +12,7 @@
  * @author Ignacio
  */
 include_once '../dao/MuestraDao.php';
+include_once '../dto/MuestraDto.php';
 include_once '../sql/ClasePDO.php';
 
 class MuestraDaoImpl implements MuestraDao {
@@ -28,24 +29,30 @@ class MuestraDaoImpl implements MuestraDao {
     public static function agregarObjeto($dto) {
         try {
             $pdo = new clasePDO();
-            $stmt = $pdo->prepare("INSERT INTO MUESTRA (fechaRecepcion, temperaturaMuestra, cantidadMuestra, codigo_cliente) VALUES(now(),?,?,?);");
+            $stmt = $pdo->prepare("INSERT INTO MUESTRA (fechaRecepcion, temperaturaMuestra, cantidadMuestra, codigo_cliente) VALUES(now(),?,?,?)");
 
             $temperatura = $dto->getTemperaturaMuestra();
             $cantidad = $dto->getCantidadMuestra();
             $codigoCliente = $dto->getCodigoCliente();
 
 
-
-            $stmt->bindParam(1, $temperatura);
-            $stmt->bindParam(2, $cantidad);
+            if ($temperatura > 10 & $temperatura < 100) {
+                $stmt->bindParam(1, $temperatura);
+            }
+            if ($cantidad > 0) {
+                $stmt->bindParam(2, $cantidad);
+            }
             $stmt->bindParam(3, $codigoCliente);
 
 
-            $stmt->execute();
+            if ($stmt->execute()) {
+                return true;
+            }
             $pdo = null;
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
         }
+        return false;
     }
 
     public static function eliminarrObjeto($dto) {
@@ -56,7 +63,7 @@ class MuestraDaoImpl implements MuestraDao {
         $lista = new ArrayObject();
         try {
             $pdo = new clasePDO();
-            $stmt = $pdo->prepare("SELECT IDMUESTRA, TEMPERATURAMUESTRA, CANTIDADMUESTRA FROM MUESTRA WHERE IDMUESTRA=?;");
+            $stmt = $pdo->prepare("SELECT IDMUESTRA, TEMPERATURAMUESTRA, CANTIDADMUESTRA FROM MUESTRA WHERE IDMUESTRA=?");
             $stmt->bindParam(1, $codigo);
             $stmt->execute();
             $resultado = $stmt->fetchAll();
@@ -97,12 +104,13 @@ class MuestraDaoImpl implements MuestraDao {
         }
         return $lista;
     }
+
 //Falta implementar
     public static function listarMuestrasPorRutCliente($rut) {
         $lista = new ArrayObject();
         try {
             $pdo = new clasePDO();
-            $stmt = $pdo->prepare("SELECT IDMUESTRA, TEMPERATURAMUESTRA, CANTIDADMUESTRA FROM MUESTRA WHERE CODIGO_CLIENTE=?;");
+            $stmt = $pdo->prepare("SELECT IDMUESTRA, TEMPERATURAMUESTRA, CANTIDADMUESTRA FROM MUESTRA WHERE CODIGO_CLIENTE=?");
             $stmt->bindParam(1, $codigo);
             $stmt->execute();
             $resultado = $stmt->fetchAll();

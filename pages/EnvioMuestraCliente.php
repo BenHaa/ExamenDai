@@ -7,6 +7,9 @@ session_start();
 //}else{
 //    header('Location: ../pages/perfil1.php');
 //}
+if (!empty($_SESSION["envioMsg"])) {
+    $msg = $_SESSION["envioMsg"];
+}
 ?>
 
 <!doctype html>
@@ -166,6 +169,15 @@ session_start();
 
 
 
+        <script>
+            $(document).ready(function () {
+                var msg = "<?php echo $msg ?>";
+                alert(msg);
+
+            <?php unset($_SESSION["envioMsg"]); ?>
+
+            });
+        </script>
 
 
 

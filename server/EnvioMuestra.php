@@ -2,6 +2,7 @@
 
 include_once '../dto/MuestraDto.php';
 include_once '../dao/MuestraDaoImpl.php';
+session_start();
 
 $temperatura = $_POST["txtTemperatura"];
 $cantidad = $_POST["txtCantidad"];
@@ -13,5 +14,12 @@ $dto->setCantidadMuestra($cantidad);
 $dto->setCodigoCliente(3);
 $dto->setTemperaturaMuestra($temperatura);
 
-MuestraDaoImpl::agregarObjeto($dto);
+if(MuestraDaoImpl::agregarObjeto($dto)){
+    $_SESSION["envioMsg"] = "Se ha enviado la muestra exitosamente";
+    
+}else{
+    $_SESSION["envioMsg"] = "No se ha podido enviar la muestra";
+}
 
+
+header('Location: ../pages/EnvioMuestraCliente.php');
