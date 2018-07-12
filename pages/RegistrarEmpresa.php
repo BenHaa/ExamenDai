@@ -1,6 +1,4 @@
-<?php
-
-?>
+<?php ?>
 
 <!doctype html>
 <html lang="en">
@@ -31,18 +29,20 @@
         <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
         <link href="../assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+        <script src="../css/js/jquery331.js"></script>
+        <script src="../css/js/jquery.rut.js"></script>
 
     </head>
-    
+
     <style>
-        
+
         #exampleModal .modal-background{
             display:none;
-            
+
         }
-        
+
     </style>
-    
+
     <body>
 
         <div class="wrapper">
@@ -55,39 +55,102 @@
                         </a>
                     </div>
 
-                    
                 </div>
             </div>
 
             <div class="main-panel">
-                <nav class="navbar navbar-default navbar-fixed">
-                    <div class="container-fluid">
-                       
-                    </div>
-                </nav>
-
 
                 <div class="content">
                     <div class="container-fluid">
                         <div class="row">
-                             <form action="../server/"> 
-                            
-                            </form>
+                            <div class="col-4">
+                                <h3>
+                                    REGISTRAR EMPRESA   
+                                </h3>
+                            </div>
+                            <div class="col-4">
+                                <form action="../server/registrarEmpresa.php" method="POST"> 
+                                    <table class="table-bordered table table-condensed">
+                                        <tbody>
+                                            <tr>
+                                                <td>Rut</td>
+                                                <td><input type="text" name="txtRut" id="txtRut" size="13"required></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Nombre</td>
+                                                <td><input type="text" name="txtNombre"required></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Contraseña</td>
+                                                <td><input type="text" name="txtPassword"required></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Direccion</td>
+                                                <td><input type="text" name="txtDireccion"required></td>
+                                            </tr>
+                                        </tbody>
+                                    </table><br>
+                                    <h5>Contactos</h5>
+                                    <table class="table-bordered table table-condensed">
+                                        <tbody>
+                                            <tr>
+                                                <td>Rut</td>
+                                                <td><input type="text" name="txtR1" id="txtR1" size="13" required></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Nombre</td>
+                                                <td><input type="text" name="txtN1"required></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Email</td>
+                                                <td><input type="text" name="txtE1"required></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Telefono</td>
+                                                <td><input type="text" name="txtT1"required></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table-bordered table table-condensed">
+                                        <tbody>
+                                            <tr>
+                                                <td>Rut</td>
+                                                <td><input type="text" name="txtR2" id="txtR2" size="13" required></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Nombre</td>
+                                                <td><input type="text" name="txtN2" required></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Email</td>
+                                                <td><input type="text" name="txtE2" required></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Telefono</td>
+                                                <td><input type="text" name="txtT2" required></td>
+                                            </tr>
+                                        </tbody>
+                                    </table><br>
+                                    <input type="submit" value="Registrar Empresa" class="btn btn-primary btn-hover">
+
+                                </form>
+                                <script>
+                                    $('#txtRut').rut({formatOn: 'keyup'});
+                                    $('#txtR1').rut({formatOn: 'keyup'});
+                                    $('#txtR2').rut({formatOn: 'keyup'});
+                                </script>
+                            </div>
+                            <div class="col-4"></div>
                         </div>
                     </div>
                 </div>
 
 
-                <footer class="footer">
-                    <div class="container-fluid">
-
-                    </div>
-                </footer>
-
             </div>
         </div>
-        
-        
+
+
+
 
     </body>
 
