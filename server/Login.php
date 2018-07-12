@@ -14,7 +14,7 @@ session_start();
 if (isset($_POST["txtUserName"]) & isset($_POST["txtPassword"])) {
 
     $empresa = EmpresaDaoImp::recuperarEmpresa($_POST["txtUserName"], $_POST["txtPassword"]);
-    echo var_dump($empresa);
+//    echo var_dump($empresa);
     if (!empty($empresa->getRut())) {
 
         $contacto = ContactoDaoImpl::buscarPorRutEmpresa($empresa->getRut());
