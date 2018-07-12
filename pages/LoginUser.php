@@ -24,7 +24,7 @@
 
         <script src="../assets/js/jquery331.js"></script>
         <script src="../assets/js/bootstrap.min.js"></script>
-        <script src="../css/js/jquery.rut.js"></script>
+
 
 
 
@@ -44,8 +44,8 @@
                             BIENVENIDO
                         </span>
 
-                        <div class="wrap-input100 validate-input" data-validate = "Rut requerido">
-                            <input class="input100" type="text" name="txtRut" placeholder="&nbsp;Rut"id="txtRut" >
+                        <div class="wrap-input100 validate-input" data-validate = "Usuario requerido">
+                            <input class="input100" type="text" name="txtUserName" placeholder="&nbsp;User Name"id="txtUserName" >
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-id-card" aria-hidden="true"></i>
@@ -77,7 +77,7 @@
                         </div>
                         <div class="text-center p-t-136">
                             <a class="txt2"  data-toggle="modal" data-target="#exampleModal">
-                                registrar Cuenta
+                                Registrar Cuenta
                                 <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                             </a>
                         </div>
@@ -86,9 +86,6 @@
             </div>
         </div>
 
-        <script>
-            $('#txtRut').rut({formatOn: 'keyup'});
-        </script>
 
 
 
@@ -121,7 +118,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                   <form action="../server/RegistrarUsuario.php" method="POST">
+                    <form action="../server/RegistrarUsuario.php" method="POST">
 
                         <div class="modal-body">
 
@@ -162,7 +159,7 @@
                             </table>
                             <br>
 
-                            
+
 
 
                         </div>

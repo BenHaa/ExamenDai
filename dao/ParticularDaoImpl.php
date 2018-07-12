@@ -127,7 +127,24 @@ class ParticularDaoImpl implements ParticularDao {
 
             $stmt->bindParam(1, $numero);
             $stmt->bindParam(2, $rut);
-            echo "holaaa";
+            if ($stmt->execute()) {
+                $pdo = null;
+                return true;
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return false;
+    }
+
+    public static function comprobarParticular($nombre, $pass) {
+        try {
+            $pdo = new clasePDO();
+            $stmt = $pdo->prepare("SELECT * FROM PARTICULAR WHERE NOMBREPARTICULAR=? AND PASSWORDPARTICULAR=?");
+
+            $stmt->bindParam(1, $nombre);
+            $stmt->bindParam(2, $pass);
+
             if ($stmt->execute()) {
                 $pdo = null;
                 return true;

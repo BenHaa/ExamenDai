@@ -16,5 +16,7 @@ interface ParticularDao extends BaseDao {
     
     public static function listarTelefonosParticular($rut);
     
+    public static function comprobarParticular($nombre, $pass);
+    
     
 }

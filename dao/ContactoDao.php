@@ -12,5 +12,7 @@
  */
 include_once 'BaseDao.php';
 interface ContactoDao extends BaseDao{
-    //put your code here
+    
+    public static function comprobarContacto($nombre, $pass);
+    
 }
