@@ -2,6 +2,7 @@
 
 include_once '../dto/ParticularDto.php';
 include_once '../dao/ParticularDaoImpl.php';
+session_start();
 
 $dto = new ParticularDto();
 
@@ -11,20 +12,21 @@ $dto->setContrasena($_POST["txtPassword"]);
 $dto->setDireccion($_POST["txtDireccion"]);
 $dto->setEmail($_POST["txtEmail"]);
 
-$num1=($_POST["txtTel1"]);
-$num2=($_POST["txtTel2"]);
+$num1 = ($_POST["txtTel1"]);
+$num2 = ($_POST["txtTel2"]);
 
 
 
 if (!ParticularDaoImpl::existeParticular($dto->getRutParticular())) {
-    ParticularDaoImpl::agregarObjeto($dto);
+    if (ParticularDaoImpl::agregarObjeto($dto)) {
+        $_SESSION["updateMsg"] = "Particular registrado con éxito";
+    }
     ParticularDaoImpl::agregarTelefono($num1, $dto->getRutParticular());
-    if($num2!=null || isset($num2)){
+    if ($num2 != null || isset($num2)) {
         ParticularDaoImpl::agregarTelefono($num2, $dto->getRutParticular());
     }
-    echo "<script>alert('Particular registrado, redireccionando al Login...')</script>;";
-    header('Location: ../pages/LoginUser.php');
+    header('Location: ../pages/RegistrarParticular.php');
 } else {
-    echo"<script>alert('La empresa ya está registrada')</script>";
-    header('Location: ../pages/registrarEmpresa.php');
+    $_SESSION["updateMsg"] = "No se pudo registrar el particular";
+    header('Location: ../pages/RegistrarParticular.php');
 }

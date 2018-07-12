@@ -31,11 +31,11 @@ $cto2->setTelefonoContacto($_POST["txtT2"]);
 $cto2->setRutEmpresa($_POST["txtRut"]);
         
 
-if (!EmpresaDaoImp::existeEmpresa($rut)) {
+if (!EmpresaDaoImp::existeEmpresaReg($emp->getRut())) {
     if (EmpresaDaoImp::agregarObjeto($emp) && ContactoDaoImpl::agregarObjeto($cto1) && ContactoDaoImpl::agregarObjeto($cto2)) {
 
         $_SESSION["updateMsg"] = "Empresa registrada con exito";
-        header('Location: ../pages/LoginUser.php');
+        header('Location: ../pages/registrarEmpresa.php');
     } else {
         $_SESSION["updateMsg"] = "No se ha podido registrar la empresa";
         header('Location: ../pages/registrarEmpresa.php');

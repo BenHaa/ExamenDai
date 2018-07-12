@@ -1,4 +1,6 @@
-<?php ?>
+<?php
+session_start();
+?>
 
 <!doctype html>
 <html lang="en">
@@ -150,7 +152,6 @@
         </div>
 
         <?php
-        session_start();
         if (!empty($_SESSION["updateMsg"])) {
             $msg = $_SESSION["updateMsg"];
         }

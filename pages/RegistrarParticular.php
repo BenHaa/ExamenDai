@@ -1,4 +1,6 @@
-<?php ?>
+<?php
+session_start();
+?>
 
 <!doctype html>
 <html lang="en">
@@ -118,6 +120,21 @@
             </div>
         </div>
 
+
+        <?php
+        if (!empty($_SESSION["updateMsg"])) {
+            $msg = $_SESSION["updateMsg"];
+        }
+        ?>
+        <script>
+            $(document).ready(function () {
+                var msg = "<?php echo $msg ?>";
+                alert(msg);
+
+<?php unset($_SESSION["updateMsg"]); ?>
+
+            });
+        </script>
 
 
 

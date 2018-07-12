@@ -32,6 +32,25 @@ class EmpresaDaoImp implements BaseDao {
         return $dtoN;
     }
 
+    public static function existeEmpresaReg($rut) {
+        try {
+            $pdo = new clasePDO();
+            $stmt = $pdo->prepare("SELECT * FROM EMPRESA WHERE RUTEMPRESA=?");
+
+            $stmt->bindParam(1, $rut);
+
+            $stmt->execute();
+            $rs = $stmt->fetchAll();
+            foreach ($rs as $value) {
+                $pdo = null;
+                return true;
+            }
+        } catch (Exception $exc) {
+//            echo $exc->getTraceAsString();
+        }
+        return false;
+    }
+
     public static function actualizarObjeto($dto) {
         try {
             $pdo = new clasePDO();
@@ -41,7 +60,7 @@ class EmpresaDaoImp implements BaseDao {
             $nombre = $dto->getNombre();
             $password = $dto->getPassword();
             $direccion = $dto->getDireccion();
-            
+
 
             $stmt->bindParam(4, $rut);
             $stmt->bindParam(1, $nombre);
@@ -49,7 +68,7 @@ class EmpresaDaoImp implements BaseDao {
             $stmt->bindParam(3, $direccion);
 
             $stmt->execute();
-            return ($stmt->rowCount()>0);
+            return ($stmt->rowCount() > 0);
         } catch (Exception $exc) {
             echo $exc->getMessage();
             return false;
@@ -100,7 +119,7 @@ class EmpresaDaoImp implements BaseDao {
 
             $stmt->execute();
             $pdo = null;
-            return ($stmt->rowCount()>0);
+            return ($stmt->rowCount() > 0);
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
             return false;
