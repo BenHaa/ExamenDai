@@ -138,21 +138,60 @@ class ParticularDaoImpl implements ParticularDao {
     }
 
     public static function comprobarParticular($nombre, $pass) {
+        $dto = new ParticularDto();
+
         try {
             $pdo = new clasePDO();
             $stmt = $pdo->prepare("SELECT * FROM PARTICULAR WHERE NOMBREPARTICULAR=? AND PASSWORDPARTICULAR=?");
 
+
             $stmt->bindParam(1, $nombre);
             $stmt->bindParam(2, $pass);
-
             if ($stmt->execute()) {
-                $pdo = null;
-                return true;
+                $resultado = $stmt->fetchAll();
+
+                foreach ($resultado as $value) {
+
+                    $dto->setContrasena($value["passwordParticular"]);
+                    $dto->setNombre($value["nombreParticular"]);
+                    $dto->setEmail($value["emailParticular"]);
+                    $dto->setRutParticular($value["rutParticular"]);
+                    $dto->setDireccion($value["direccionParticular"]);
+
+                    $pdo = null;
+                    return $dto;
+                }
             }
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
         }
-        return false;
+        return $dto;
+    }
+
+    public static function buscarCodigoCliente($rutParticular) {
+        $codigo = 0;
+
+        try {
+            $pdo = new clasePDO();
+            $stmt = $pdo->prepare("SELECT IDCLIENTE FROM CLIENTE JOIN PARTICULAR ON CLIENTE.RUT_PARTICULAR = PARTICULAR.RUTPARTICULAR
+            WHERE PARTICULAR.RUTPARTICULAR=?");
+
+
+            $stmt->bindParam(1, $rutParticular);
+
+            if ($stmt->execute()) {
+                $resultado = $stmt->fetchAll();
+
+                foreach ($resultado as $value) {
+                    $codigo = $value["IDCLIENTE"];
+                    $pdo = null;
+                    return $codigo;
+                }
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $codigo;
     }
 
 }

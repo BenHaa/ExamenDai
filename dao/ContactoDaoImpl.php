@@ -64,4 +64,30 @@ class ContactoDaoImpl implements ContactoDao {
         return $dto;
     }
 
+    public static function buscarCodigoCliente($rutContacto) {
+        $codigo = 0;
+
+        try {
+            $pdo = new clasePDO();
+            $stmt = $pdo->prepare("SELECT IDCLIENTE FROM CLIENTE JOIN CONTACTO ON CLIENTE.RUT_CONTACTOEMPRESA = CONTACTO.RUTCONTACTO
+            WHERE CONTACTO.RUTCONTACTO=?");
+
+
+            $stmt->bindParam(1, $rutContacto);
+
+            if ($stmt->execute()) {
+                $resultado = $stmt->fetchAll();
+
+                foreach ($resultado as $value) {
+                    $codigo = $value["IDCLIENTE"];
+                    $pdo = null;
+                    return $codigo;
+                }
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $codigo;
+    }
+
 }

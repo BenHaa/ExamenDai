@@ -164,23 +164,34 @@ class EmpleadoDaoImpl implements EmpleadoDao {
     }
 
     public static function comprobarEmpleado($nombre, $pass) {
+        $dto = new EmpleadoDto();
+
         try {
             $pdo = new clasePDO();
             $stmt = $pdo->prepare("SELECT * FROM EMPLEADO WHERE NOMBREEMPLEADO=? AND PASSWORDEMPLEADO=?");
 
 
-
             $stmt->bindParam(1, $nombre);
             $stmt->bindParam(2, $pass);
+
             if ($stmt->execute()) {
-                $pdo = null;
-                return true;
+                $resultado = $stmt->fetchAll();
+
+                foreach ($resultado as $value) {
+                    $dto->setContrasena($value["passwordEmpleado"]);
+                    $dto->setNombre($value["nombreEmpleado"]);
+                    $dto->setEstado($value["estado"]);
+                    $dto->setRut($value["rutEmpleado"]);
+                    $dto->setIdTipoEmpleado($value["id_tipoEmpleado"]);
+
+                    $pdo = null;
+                    return $dto;
+                }
             }
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
         }
-        return false;
-
+        return $dto;
     }
 
 }

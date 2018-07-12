@@ -10,13 +10,13 @@
  *
  * @author Ignacio
  */
-
 include_once 'BaseDao.php';
+
 interface ParticularDao extends BaseDao {
-    
+
     public static function listarTelefonosParticular($rut);
-    
+
     public static function comprobarParticular($nombre, $pass);
-    
-    
+
+    public static function buscarCodigoCliente($rutParticular);
 }

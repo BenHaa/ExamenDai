@@ -1,5 +1,9 @@
 <?php
 include_once '../dao/ParticularDaoImpl.php';
+include_once '../dao/ContactoDaoImpl.php';
+include_once '../dto/ParticularDto.php';
+include_once '../dto/ContactoDto.php';
+
 session_start();
 
 //echo "Perfil ".$_SESSION["perfil"];
@@ -9,10 +13,33 @@ session_start();
 //    header('Location: ../pages/perfil1.php');
 //}
 
-$telefonos = ParticularDaoImpl::listarTelefonosParticular("14.273-871-3");
+
 
 if (!empty($_SESSION["updateMsg"])) {
     $msg = $_SESSION["updateMsg"];
+}
+
+if (isset($_SESSION["dtoContacto"])) {
+    $contacto = $_SESSION["dtoContacto"];
+    $rut = $contacto->getRutContacto();
+    $nombre = $contacto->getNombreContacto();
+    $contrasena = $contacto->getContrasenaContacto();
+    $correo = $contacto->getEmailContacto();
+
+    $codigo = ContactoDaoImpl::buscarCodigoCliente($rut);
+}
+
+if (isset($_SESSION["dtoParticular"])) {
+    $particular = $_SESSION["dtoParticular"];
+    $rut = $particular->getRutParticular();
+    $direccion = $particular->getDireccion();
+    $nombre = $particular->getNombre();
+    $contrasena = $particular->getContrasena();
+    $correo = $particular->getEmail();
+
+
+    $codigo = ParticularDaoImpl::buscarCodigoCliente($rut);
+    $telefonos = ParticularDaoImpl::listarTelefonosParticular($rut);
 }
 ?>
 
@@ -114,7 +141,7 @@ if (!empty($_SESSION["updateMsg"])) {
                     <div class="container-fluid">
                         <div class="navbar-header">
 
-                            <a class="navbar-brand" href="#">Datos Cliente Particular</a>
+                            <a class="navbar-brand" href="#">Datos Cliente </a>
                         </div>
                         <div class="collapse navbar-collapse">
                             <ul class="nav navbar-nav navbar-left">
@@ -145,28 +172,28 @@ if (!empty($_SESSION["updateMsg"])) {
                                 </thead>
                                 <tbody>
                                     <tr style="height: 50px;">
-                                        <td style="text-align: center;">Rut &nbsp; <input class="form-control" style="width: 30%; display: inline-block; margin: 0px -40px; margin-left: 78px;"  value="14.273-871-3" disabled />  </td>
+                                        <td style="text-align: center;">Rut &nbsp; <input class="form-control" style="width: 30%; display: inline-block; margin: 0px -40px; margin-left: 78px;"  value="<?php echo $rut ?>" disabled />  </td>
                                     </tr>
 
                                     <tr style="height: 50px;">
-                                        <td style="text-align: center;" >Código Cliente&nbsp; <input class="form-control" style="width: 30%; display: inline-block;     margin: -7px -6px; margin-left: 47px;" value="4" disabled />  </td>
+                                        <td style="text-align: center;" >Código Cliente&nbsp; <input class="form-control" style="width: 30%; display: inline-block;     margin: -7px -6px; margin-left: 47px;" value="<?php echo $codigo;?>" disabled />  </td>
                                     </tr>
 
                                     <tr style="height: 50px;">
-                                        <td style="text-align: center">Nombre  &nbsp; <input class="form-control"  name="txtNombreContacto" style="width: 30%; display: inline-block; margin: 0px -26px; margin-left: 60px;" required/>  </td>
+                                        <td style="text-align: center">Nombre  &nbsp; <input class="form-control"  name="txtNombre"  value="<?php echo $nombre;?>" style="width: 30%; display: inline-block; margin: 0px -26px; margin-left: 60px;" required/>  </td>
                                     </tr>
 
                                     <tr style="height: 50px;">
-                                        <td style="text-align: center">Contraseña &nbsp; <input class="form-control"  name="txtContrasena" style="width: 30%; display: inline-block; margin: 0px -18px; margin-left: 46px;" required/>  </td>
+                                        <td style="text-align: center">Contraseña &nbsp; <input class="form-control"  name="txtContrasena" value="<?php echo $contrasena;?>" style="width: 30%; display: inline-block; margin: 0px -18px; margin-left: 46px;" required/>  </td>
                                     </tr>
 
                                     <tr style="height: 50px;">
-                                        <td style="text-align: center">Dirección &nbsp; <input class="form-control" name="txtDireccion"  style="width: 30%; display: inline-block; margin: 0px -18px; margin-left: 53px;" required/>  </td>
+                                        <td style="text-align: center">Dirección &nbsp; <input class="form-control" name="txtDireccion"  value="" style="width: 30%; display: inline-block; margin: 0px -18px; margin-left: 53px;" required/>  </td>
                                     </tr>
 
 
                                     <tr style="height: 50px;">
-                                        <td style="text-align: center">E-mail &nbsp; <input class="form-control" name="txtEmail"  style="width: 30%; display: inline-block; margin: 0px -31px; margin-left: 62px;" required />  </td>
+                                        <td style="text-align: center">E-mail &nbsp; <input class="form-control" name="txtEmail" value="<?php echo $correo;?>"  style="width: 30%; display: inline-block; margin: 0px -31px; margin-left: 62px;" required />  </td>
                                     </tr>
 
                                 </tbody>
@@ -200,7 +227,7 @@ if (!empty($_SESSION["updateMsg"])) {
                 var msg = "<?php echo $msg ?>";
                 alert(msg);
 
-                <?php unset($_SESSION["updateMsg"]); ?>
+<?php unset($_SESSION["updateMsg"]); ?>
 
             });
         </script>
