@@ -20,7 +20,7 @@ class EmpresaDaoImp implements BaseDao {
             foreach ($rs as $value){
                 $dto->setRut($value["rutEmpresa"]);
                 $dto->setNombre($value["nombreEmpresa"]);
-                $dto->setPassword($value["password"]);
+                $dto->setPassword($value["passwordEmpresa"]);
                 $dto->setDireccion($value["direccionEmpresa"]);
                 break;
             }
@@ -34,7 +34,7 @@ class EmpresaDaoImp implements BaseDao {
     public static function actualizarObjeto($dto) {
         try {
             $pdo = new clasePDO();
-            $stmt = $pdo->prepare("UPDATE EMPRESA SET NOMBREEMPRESA =?, PASSWORD=?, DIRECCIONEMPRESA=? WHERE RUTEMPRESA=?");
+            $stmt = $pdo->prepare("UPDATE EMPRESA SET NOMBREEMPRESA =?, passwordEmpresa=?, DIRECCIONEMPRESA=? WHERE RUTEMPRESA=?");
 
             $rut = $dto->getRut();
             $nombre = $dto->getNombre();
@@ -59,7 +59,7 @@ class EmpresaDaoImp implements BaseDao {
     public static function agregarObjeto($dto) {
         try {
             $pdo = new clasePDO();
-            $stmt = $pdo->prepare("INSERT INTO EMPRESA (RUTEMPRESA, NOMBREEMPRESA, PASSWORD, DIRECCIONEMPRESA) VALUES (?,?,?,?)");
+            $stmt = $pdo->prepare("INSERT INTO EMPRESA (RUTEMPRESA, NOMBREEMPRESA, passwordEmpresa, DIRECCIONEMPRESA) VALUES (?,?,?,?)");
 
             $rut = $dto->getRut();
             $nombre = $dto->getNombre();
