@@ -100,5 +100,31 @@ class AnalisisDaoImpl implements AnalisisDao {
     public static function LeerObjeto($dto) {
         
     }
+    
+    public static function listarAnalisis($idMuestra) {
+        $lista = new ArrayObject();
+        try {
+            $pdo = new clasePDO();
+            $stmt = $pdo->prepare("SELECT * FROM ANALISIS_MUESTRA WHERE ID_MUESTRA=?");
+            $stmt->bindParam(1, $idMuestra);
+            $stmt->execute();
+            $resultado = $stmt->fetchAll();
+            foreach ($resultado as $value) {
+                $dto = new AnalisisDto();
+                $dto->setIdAnalisis($value["idAnalisis"]);
+                $dto->setIdTipoAnalisis($value["id_tipo_analisis"]);
+                $dto->setIdMuestra($value["id_muestra"]);
+                $dto->setFechaRegistro($value["fechaRegistro"]);
+                $dto->setPpm($value["PPM"]);
+                $dto->setEstado($value["estado"]);
+                $dto->setRutEmpleado($value["rut_empleado"]);
+                $lista->append($dto);
+            }
+            $pdo = null;
+        } catch (Exception $exc) {
+            echo $exc->getMessage();
+        }
+        return $lista;
+    }
 
 }

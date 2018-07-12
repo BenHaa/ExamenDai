@@ -83,9 +83,12 @@ session_start();
                                 <p>Estado de Muestra</p>
                             </a>
                         </li>
-              
-
-
+                        <li class="">
+                            <a href="GraficosReportes.php">
+                                <i class="pe-7s-news-paper"></i>
+                                <p>Resultados de Muestras</p>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>

@@ -79,6 +79,12 @@ $listaMuestras = MuestraDaoImpl::listarMuestrasPorCodigoCliente(3);
                                 <p>Estado de Muestra</p>
                             </a>
                         </li>
+                        <li class="">
+                            <a href="GraficosReportes.php">
+                                <i class="pe-7s-news-paper"></i>
+                                <p>Resultados de Muestras</p>
+                            </a>
+                        </li>
 
 
 
