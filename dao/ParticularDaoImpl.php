@@ -18,7 +18,34 @@ include_once '../sql/ClasePDO.php';
 class ParticularDaoImpl implements ParticularDao {
 
     public static function LeerObjeto($dto) {
-        
+
+
+        try {
+            $pdo = new clasePDO();
+            $stmt = $pdo->prepare("SELECT * FROM PARTICULAR WHERE RUTPARTICULAR=?");
+            $rut = $dto->getRutParticular();
+
+            $stmt->bindParam(1, $rut);
+
+            if ($stmt->execute()) {
+                $resultado = $stmt->fetchAll();
+                echo var_dump($dto);
+                foreach ($resultado as $value) {
+                    $dto = new ParticularDto();
+                    $dto->setContrasena($value["passwordParticular"]);
+                    $dto->setNombre($value["nombreParticular"]);
+                    $dto->setEmail($value["emailParticular"]);
+                    $dto->setRutParticular($value["rutParticular"]);
+                    $dto->setDireccion($value["direccionParticular"]);
+
+                    $pdo = null;
+                    return $dto;
+                }
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $dto;
     }
 
     public static function actualizarObjeto($dto) {

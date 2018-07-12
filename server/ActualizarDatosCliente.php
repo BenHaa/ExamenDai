@@ -12,23 +12,25 @@ $dto = new ParticularDto();
 
 
 
-$nombre = $_POST["txtNombreContacto"];
+$nombre = $_POST["txtNombre"];
 $contrasena = $_POST["txtContrasena"];
 $correo = $_POST["txtEmail"];
 $direccion = $_POST["txtDireccion"];
 
-$dto->setRutParticular("14.273-871-3");
+$dto->setRutParticular($_SESSION["rutParticular"]);
 $dto->setDireccion($direccion);
 $dto->setNombre($nombre);
 $dto->setContrasena($contrasena);
 $dto->setEmail($correo);
 
 
+
 if (ParticularDaoImpl::actualizarObjeto($dto)) {
     $_SESSION["updateMsg"] = "Se actualizaron los datos del cliente exitosamente";
+    $_SESSION["dtoParticular"] = ParticularDaoImpl::LeerObjeto($dto);
 } else {
     $_SESSION["updateMsg"] = "No se pudieron actualizar los datos del cliente";
 }
 
 
-header('Location: ../pages/DatosCliente.php');
+ header('Location: ../pages/DatosCliente.php');

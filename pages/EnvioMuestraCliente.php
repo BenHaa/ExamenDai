@@ -138,7 +138,7 @@ if (!empty($_SESSION["envioMsg"])) {
 
 
                                     <tr style="height: 50px;">
-                                        <td style="text-align: center;">Temperatura &nbsp; <input  name="txtTemperatura" type="text" class="form-control" style="width: 30%; display: inline-block; margin: 0px -47px; margin-left: 72px;"/>  </td>
+                                        <td style="text-align: center;">Temperatura &nbsp; <input  name="txtTemperatura" type="text" placeholder="Ej: 25.34" class="form-control" style="width: 30%; display: inline-block; margin: 0px -47px; margin-left: 72px;"/>  </td>
                                     </tr>
 
                                     <tr style="height: 50px;">

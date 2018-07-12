@@ -8,11 +8,53 @@ class EmpresaDaoImp implements BaseDao {
 
     //put your code here
     public static function LeerObjeto($dto) {
-        
+        $dtoN = new EmpresaDto();
+        try {
+            $pdo = new clasePDO();
+            $stmt = $pdo->prepare("SELECT * FROM EMPRESA WHERE RUTEMPRESA=?");
+
+            $rut = $dto->getRut();
+
+            $stmt->bindParam(1, $rut);
+
+            $stmt->execute();
+            $rs = $stmt->fetchAll();
+
+            foreach ($rs as $value) {
+                $dtoN->setRut($value["rutEmpresa"]);
+                $dtoN->setNombre($value["nombreEmpresa"]);
+                $dtoN->setPassword($value["passwordEmpresa"]);
+                $dtoN->setDireccion($value["direccionEmpresa"]);
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $dtoN;
     }
 
     public static function actualizarObjeto($dto) {
-        
+        try {
+            $pdo = new clasePDO();
+            $stmt = $pdo->prepare("UPDATE EMPRESA SET NOMBREEMPRESA=?, PASSWORDEMPRESA=?, DIRECCIONEMPRESA=? WHERE RUTEMPRESA=?");
+
+            $rut = $dto->getRut();
+            $nombre = $dto->getNombre();
+            $password = $dto->getPassword();
+            $direccion = $dto->getDireccion();
+
+
+            $stmt->bindParam(1, $nombre);
+            $stmt->bindParam(2, $password);
+            $stmt->bindParam(3, $direccion);
+            $stmt->bindParam(4, $rut);
+
+            $stmt->execute();
+            $pdo = null;
+            return $stmt->rowCount() > 0;
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+            return false;
+        }
     }
 
     public static function recuperarEmpresa($nombre, $pass) {
@@ -33,7 +75,7 @@ class EmpresaDaoImp implements BaseDao {
                 $dto->setNombre($value["nombreEmpresa"]);
                 $dto->setPassword($value["passwordEmpresa"]);
                 $dto->setDireccion($value["direccionEmpresa"]);
-                $pdo=null;
+                $pdo = null;
             }
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
@@ -41,7 +83,7 @@ class EmpresaDaoImp implements BaseDao {
         return $dto;
     }
 
-    //Registrar empresa
+//Registrar empresa
     public static function agregarObjeto($dto) {
         try {
             $pdo = new clasePDO();
@@ -58,10 +100,10 @@ class EmpresaDaoImp implements BaseDao {
             $stmt->bindParam(4, $direccion);
 
             $stmt->execute();
-            $pdo=null;
+            $pdo = null;
             return $stmt->rowCount() > 0;
         } catch (Exception $exc) {
-//            echo $exc->getTraceAsString();
+            echo $exc->getTraceAsString();
             return false;
         }
     }
@@ -77,7 +119,7 @@ class EmpresaDaoImp implements BaseDao {
             $stmt->execute();
             $rs = $stmt->fetchAll();
             foreach ($rs as $value) {
-                $pdo=null;
+                $pdo = null;
                 return true;
             }
         } catch (Exception $exc) {

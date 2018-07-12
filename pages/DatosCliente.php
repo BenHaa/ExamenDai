@@ -29,8 +29,12 @@ if (isset($_SESSION["dtoParticular"])) {
     $contrasena = $particular->getContrasena();
     $correo = $particular->getEmail();
 
-
+    $_SESSION["rutParticular"] = $rut;
+    
+    
     $codigo = ParticularDaoImpl::buscarCodigoCliente($rut);
+    $_SESSION["codigoParticular"] = $codigo;
+    
     $telefonos = ParticularDaoImpl::listarTelefonosParticular($rut);
 }
 ?>
@@ -168,24 +172,24 @@ if (isset($_SESSION["dtoParticular"])) {
                                     </tr>
 
                                     <tr style="height: 50px;">
-                                        <td style="text-align: center;" >Código Cliente&nbsp; <input class="form-control" style="width: 30%; display: inline-block;     margin: -7px -6px; margin-left: 47px;" value="<?php echo $codigo;?>" disabled />  </td>
+                                        <td style="text-align: center;" >Código Cliente&nbsp; <input class="form-control" style="width: 30%; display: inline-block;     margin: -7px -6px; margin-left: 47px;" value="<?php echo $codigo; ?>" disabled />  </td>
                                     </tr>
 
                                     <tr style="height: 50px;">
-                                        <td style="text-align: center">Nombre  &nbsp; <input class="form-control"  name="txtNombre"  value="<?php echo $nombre;?>" style="width: 30%; display: inline-block; margin: 0px -26px; margin-left: 60px;" required/>  </td>
+                                        <td style="text-align: center">Nombre  &nbsp; <input class="form-control"  name="txtNombre"  value="<?php echo $nombre; ?>" style="width: 30%; display: inline-block; margin: 0px -26px; margin-left: 60px;" required/>  </td>
                                     </tr>
 
                                     <tr style="height: 50px;">
-                                        <td style="text-align: center">Contraseña &nbsp; <input class="form-control"  name="txtContrasena" value="<?php echo $contrasena;?>" style="width: 30%; display: inline-block; margin: 0px -18px; margin-left: 46px;" required/>  </td>
+                                        <td style="text-align: center">Contraseña &nbsp; <input class="form-control"  name="txtContrasena" value="<?php echo $contrasena; ?>" style="width: 30%; display: inline-block; margin: 0px -18px; margin-left: 46px;" required/>  </td>
                                     </tr>
 
                                     <tr style="height: 50px;">
-                                        <td style="text-align: center">Dirección &nbsp; <input class="form-control" name="txtDireccion"  value="" style="width: 30%; display: inline-block; margin: 0px -18px; margin-left: 53px;" required/>  </td>
+                                        <td style="text-align: center">Dirección &nbsp; <input class="form-control" name="txtDireccion"  value="<?php echo $direccion?>" style="width: 30%; display: inline-block; margin: 0px -18px; margin-left: 53px;" required/>  </td>
                                     </tr>
 
 
                                     <tr style="height: 50px;">
-                                        <td style="text-align: center">E-mail &nbsp; <input class="form-control" name="txtEmail" value="<?php echo $correo;?>"  style="width: 30%; display: inline-block; margin: 0px -31px; margin-left: 62px;" required />  </td>
+                                        <td style="text-align: center">E-mail &nbsp; <input class="form-control" name="txtEmail" value="<?php echo $correo; ?>"  style="width: 30%; display: inline-block; margin: 0px -31px; margin-left: 62px;" required />  </td>
                                     </tr>
 
                                 </tbody>
@@ -213,16 +217,6 @@ if (isset($_SESSION["dtoParticular"])) {
         </div>
 
 
-
-        <script>
-            $(document).ready(function () {
-                var msg = "<?php echo $msg ?>";
-                alert(msg);
-
-<?php unset($_SESSION["updateMsg"]); ?>
-
-            });
-        </script>
 
 
 
@@ -264,6 +258,16 @@ if (isset($_SESSION["dtoParticular"])) {
                 </div>
             </div>
         </div>
+
+        <script>
+            $(document).ready(function () {
+                var msg = "<?php echo $msg ?>";
+                alert(msg);
+
+<?php unset($_SESSION["updateMsg"]); ?>
+
+            });
+        </script>
 
 
 

@@ -18,28 +18,59 @@ include_once '../sql/ClasePDO.php';
 class ContactoDaoImpl implements ContactoDao {
 
     public static function LeerObjeto($dto) {
-        
+
+        try {
+            $pdo = new clasePDO();
+            $stmt = $pdo->prepare("SELECT * FROM CONTACTO WHERE RUTCONTACTO=?");
+
+            $rut = $dto->getRutContacto();
+
+            $stmt->bindParam(1, $rut);
+
+            $stmt->execute();
+            $resultado = $stmt->fetchAll();
+
+            foreach ($resultado as $value) {
+                $dtoN = new ContactoDto();
+                $dtoN->setNombreContacto($value["nombreContacto"]);
+                $dtoN->setEmailContacto($value["emailContacto"]);
+                $dtoN->setRutContacto($value["rutContacto"]);
+                $dtoN->setRutEmpresa($value["rut_empresa"]);
+                $dtoN->setTelefonoContacto($value["telefonoContacto"]);
+                $pdo = null;
+            }
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+        return $dtoN;
     }
 
     public static function actualizarObjeto($dto) {
         try {
             $pdo = new clasePDO();
-            $stmt = $pdo->prepare("UPDATE CONTACTO SET nombreContacto=?, emailContacto=?. telefonoContacto=?,
+            $stmt = $pdo->prepare("UPDATE CONTACTO SET nombreContacto=?, emailContacto=?, telefonoContacto=?
             WHERE rutContacto=?");
-            
+
             $nombre = $dto->getNombreContacto();
             $email = $dto->getEmailContacto();
             $telefono = $dto->getTelefonoContacto();
-            
-            $stmt->bindParam(1, $nombre);
-            $stmt->bindParam(2, $telefono);
-            $stmt->bindParam(3, $email);
+            $rut = $dto->getRutContacto();
 
-            $stmt->execute();
-            $pdo = null;
+
+
+            $stmt->bindParam(1, $nombre);
+            $stmt->bindParam(2, $email);
+            $stmt->bindParam(3, $telefono);
+            $stmt->bindParam(4, $rut);
+
+            if ($stmt->execute()) {
+                $pdo = null;
+                return true;
+            }
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
         }
+        return false;
     }
 
     public static function agregarObjeto($dto) {

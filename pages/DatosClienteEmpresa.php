@@ -25,7 +25,7 @@ if (isset($_SESSION["dtoContacto"])) {
     $nombre = $contacto->getNombreContacto();
     $correo = $contacto->getEmailContacto();
     $telefono = $contacto->getTelefonoContacto();
-    
+
     $_SESSION["rutContacto"] = $rut;
 }
 
@@ -37,6 +37,7 @@ if (isset($_SESSION["dtoEmpresa"])) {
     $contrasena = $empresa->getPassword();
 
     $codigo = EmpresaDaoImp::buscarCodigoCliente($rutEmpresa);
+    $_SESSION["rutEmpresa"] = $rutEmpresa;
     $_SESSION["codigoEmpresa"] = $codigo;
 }
 ?>
@@ -215,7 +216,7 @@ if (isset($_SESSION["dtoEmpresa"])) {
                                     </tr>
 
                                     <tr style="height: 50px;">
-                                        <td style="text-align: center">Nombre  &nbsp; <input class="form-control"  name="txtNombre"  value="<?php echo $nombreEmpresa; ?>" style="width: 30%; display: inline-block; margin: 0px -26px; margin-left: 60px;" required/>  </td>
+                                        <td style="text-align: center">Nombre  &nbsp; <input class="form-control"  name="txtNombre"   value="<?php echo $nombreEmpresa; ?>" style="width: 30%; display: inline-block; margin: 0px -26px; margin-left: 60px;" required/>  </td>
                                     </tr>
 
                                     <tr style="height: 50px;">
@@ -230,7 +231,7 @@ if (isset($_SESSION["dtoEmpresa"])) {
                                 </tbody>
                             </table>
 
-                            <button type="submit" class="btn btn-primary" style="margin-top: 42px; margin-left: 475px;">Actualizar Datos Empresa</button>
+                            <button type="submit"  name="updEmpresa" value="updEmpresa" class="btn btn-primary" style="margin-top: 42px; margin-left: 475px;">Actualizar Datos Empresa</button>
 
                         </form>
 
@@ -279,11 +280,11 @@ if (isset($_SESSION["dtoEmpresa"])) {
                     <form action="../server/GestionarTelefonosParticular.php" method="POST">
                         <div class="modal-body">
                             <p style="margin-left: 100px; display: inline-block;"> Teléfono  </p> &nbsp; <select name="cmbTelefono" class="form-control" style="width:180px; display: inline-block"/> 
-<?php
-foreach ($telefonos as $value) {
-    echo "<option>" . $value . "</option>";
-}
-?>
+                            <?php
+                            foreach ($telefonos as $value) {
+                                echo "<option>" . $value . "</option>";
+                            }
+                            ?>
                             </select> &nbsp;&nbsp;
                             <button class="btn btn-primary"  name="eliminar" value="eliminar" style="display: inline-block; margin-left: 4px;">Eliminar Número </button>
 

@@ -10,8 +10,15 @@ $cantidad = $_POST["txtCantidad"];
 
 $dto = new MuestraDto();
 
+if(isset($_SESSION["codigoEmpresa"])){
+    $codigo = $_SESSION["codigoEmpresa"];
+}else{
+    $codigo = $_SESSION["codigoParticular"];
+}
+
+
 $dto->setCantidadMuestra($cantidad);
-$dto->setCodigoCliente(3);
+$dto->setCodigoCliente($codigo);
 $dto->setTemperaturaMuestra($temperatura);
 
 if(MuestraDaoImpl::agregarObjeto($dto)){
