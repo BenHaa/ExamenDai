@@ -15,7 +15,6 @@ class ContactoDto {
 
     private $rutContacto;
     private $nombreContacto;
-    private $contrasenaContacto;
     private $emailContacto;
     private $telefonoContacto;
     private $rutEmpresa;
@@ -28,16 +27,6 @@ class ContactoDto {
         return $this->nombreContacto;
     }
 
-    function getContrasenaContacto() {
-        return $this->contrasenaContacto;
-    }
-
-    function setContrasenaContacto($contrasenaContacto) {
-        $this->contrasenaContacto = $contrasenaContacto;
-    }
-
-        
-    
     function getEmailContacto() {
         return $this->emailContacto;
     }

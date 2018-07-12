@@ -16,7 +16,20 @@ class EmpresaDto {
     private $rut;
     private $nombre;
     private $direccion;
-    
+    private $password;
+
+    function __construct() {
+        
+    }
+
+    function getPassword() {
+        return $this->password;
+    }
+
+    function setPassword($password) {
+        $this->password = $password;
+    }
+
     function getRut() {
         return $this->rut;
     }
@@ -41,7 +54,4 @@ class EmpresaDto {
         $this->direccion = $direccion;
     }
 
-
-    
-    
 }
