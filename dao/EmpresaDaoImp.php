@@ -35,24 +35,23 @@ class EmpresaDaoImp implements BaseDao {
     public static function actualizarObjeto($dto) {
         try {
             $pdo = new clasePDO();
-            $stmt = $pdo->prepare("UPDATE EMPRESA SET NOMBREEMPRESA=?, PASSWORDEMPRESA=?, DIRECCIONEMPRESA=? WHERE RUTEMPRESA=?");
+            $stmt = $pdo->prepare("UPDATE EMPRESA SET NOMBREEMPRESA =?, passwordEmpresa=?, DIRECCIONEMPRESA=? WHERE RUTEMPRESA=?");
 
             $rut = $dto->getRut();
             $nombre = $dto->getNombre();
             $password = $dto->getPassword();
             $direccion = $dto->getDireccion();
+            
 
-
+            $stmt->bindParam(4, $rut);
             $stmt->bindParam(1, $nombre);
             $stmt->bindParam(2, $password);
             $stmt->bindParam(3, $direccion);
-            $stmt->bindParam(4, $rut);
 
             $stmt->execute();
-            $pdo = null;
-            return $stmt->rowCount() > 0;
+            return ($stmt->rowCount()>0);
         } catch (Exception $exc) {
-            echo $exc->getTraceAsString();
+            echo $exc->getMessage();
             return false;
         }
     }

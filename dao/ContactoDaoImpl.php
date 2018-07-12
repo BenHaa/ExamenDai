@@ -76,6 +76,25 @@ class ContactoDaoImpl implements ContactoDao {
     public static function agregarObjeto($dto) {
         try {
             $pdo = new clasePDO();
+            $stmt = $pdo->prepare("INSERT INTO CONTACTO (RUTCONTACTO, NOMBRECONTACTO, EMAILCONTACTO, TELEFONOCONTACTO, RUT_EMPRESA) VALUES (?,?,?,?,?)");
+
+            $rut = $dto->getRutContacto();
+            $nombre = $dto->getNombreContacto();
+            $email = $dto->getEmailContacto();
+            $telefono = $dto->getTelefonoContacto();
+            $empresa = $dto->getRutEmpresa();
+
+            $stmt->bindParam(1, $rut);
+            $stmt->bindParam(2, $nombre);
+            $stmt->bindParam(3, $email);
+            $stmt->bindParam(4, $email);
+            $stmt->bindParam(5, $empresa);
+
+            $stmt->execute();
+            return ($stmt->rowCount()>0);
+        } catch (Exception $exc) {
+            echo $exc->getMessage();
+            return false;
             $stmt = $pdo->prepare("INSERT INTO CONTACTO(rutContacto, nombreContacto, emailContacto, telefonoContacto, rut_empresa) 
             VALUES(?,?,?,?,?)");
 
